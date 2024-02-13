@@ -26,11 +26,59 @@
 	<p>Given that I am checking each sample within the bounding box of the triangle, my algorithm would be of the same
 		efficiency.</p>
 	<h3>basic/test4.svg</h3>
-	<img src="./media/task1/task1.png" />
+	<img src="./media/task1/task1.png" style="width: 50%; height: auto;" />
 
 	<h2>Task 2: Antialiasing by Supersampling</h2>
-	<p>Description of the supersampling algorithm, including sample buffer size adjustment, pixel and sub-pixel
-		processing, and color averaging for antialiasing effects.</p>
+	<h3>Supersampling algorithm:</h3>
+	<p>First, we increased sample_buffer size to = width*height*sample rate. This ensures that the sample_buffer is
+		large enough to accommodate every subpixel that would be considered with supersampling. Then, we ran through
+		every pixel in the bounding box. For every pixel, run through each sub-pixel and determine if it's inside the
+		triangle using the inside() function. If it is, add it into the sample_buffer, assigning it with the
+		corresponding color.</p>
+	<p>After the sample_buffer is filled, resolve_to_framebuffer() is called. This function basically maps each pixel in
+		the framebuffer to all its relevant subpixels in the sample_buffer. The average color of all the subpixels for
+		that pixel is calculated, then added to the framebuffer.</p>
+	<h3>Data structures:</h3>
+	<p>Within the code, we declared a struct called Point, where
+		Point = {
+		float x, y;
+		size_t index;};</p>
+
+	<p>This allows us to populate the sample buffer easily using the index after the generation of sub-pixels (Point)
+		for each pixel. This index also later helps us find the corresponding pixel that each of these sub-pixels belong
+		to, so as to easily calculate the average color.</p>
+	<h3>Rasterization pipeline modification:</h3>
+	<p>As compared to task 1, which directly draws onto the framebuffer when it has found the correct color for each
+		pixel, we modified the pipeline as follows:
+	<p>When rasterize_triangle() is called, every color of the sub-pixels is drawn onto the sample buffer</p>
+	<p>resolve_to_framebuffer() then translates the sample buffer to the frame buffer so the image is displayed with the
+		average color of sub-pixels</p>
+	</p>
+	<h3>Supersampling to achieve antialiasing:</h3>
+	<p>When we find the average color of each pixel using sub-pixels (number dependent on sample rate), each pixel at
+		the edge of the shape is rendered as a color that lies between the two color boundaries. This creates a blurring
+		effect at the edges, and causes the overall image to look smoother and more continuous, rather than pixelated
+		and jaggy.
+	</p>
+	<h3>
+		png screenshots of basic/test4.svg
+	</h3>
+	<div style="display: flex; justify-content: space-around; align-items: center;">
+		<figure style="margin: 20px;">
+			<img src="media/task2/rate1.png" alt="Description of Image 1" style="width: 100%; height: auto;">
+			<figcaption style="text-align: center;">Sample Rate = 1</figcaption>
+		</figure>
+		<figure style="margin: 20px;">
+			<img src="media/task2/rate4.png" alt="Description of Image 2" style="width: 100%; height: auto;">
+			<figcaption style="text-align: center;">Sample Rate = 4</figcaption>
+		</figure>
+		<figure style="margin: 20px;">
+			<img src="media/task2/rate16.png" alt="Description of Image 3" style="width: 100%; height: auto;">
+			<figcaption style="text-align: center;">Sample Rate = 16</figcaption>
+		</figure>
+	</div>
+
+
 
 	<h2>Task 3: Transforms</h2>
 	<p>Overview of transformations applied to achieve a robot's signature pose in my_robot.svg, involving rotations and
