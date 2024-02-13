@@ -50,9 +50,12 @@
 	<h3>Rasterization pipeline modification:</h3>
 	<p>As compared to task 1, which directly draws onto the framebuffer when it has found the correct color for each
 		pixel, we modified the pipeline as follows:
-	<p>When rasterize_triangle() is called, every color of the sub-pixels is drawn onto the sample buffer</p>
-	<p>resolve_to_framebuffer() then translates the sample buffer to the frame buffer so the image is displayed with the
-		average color of sub-pixels</p>
+	<ul>
+		<li>When rasterize_triangle() is called, every color of the sub-pixels is drawn onto the sample buffer</li>
+		<li>resolve_to_framebuffer() then translates the sample buffer to the frame buffer so the image is displayed
+			with the average color of sub-pixels</li>
+	</ul>
+
 	</p>
 	<h3>Supersampling to achieve antialiasing:</h3>
 	<p>When we find the average color of each pixel using sub-pixels (number dependent on sample rate), each pixel at
@@ -77,20 +80,82 @@
 			<figcaption style="text-align: center;">Sample Rate = 16</figcaption>
 		</figure>
 	</div>
-
-
+	<p>As the sample rate increases, it can be observed that the edges of the triangle become increasingly
+		continuous,and less pixelated. This is because an increase in sample rate results in an increase in sub-pixels
+		considered for each pixel, resulting in a more accurate average value of the boundary colors that each pixel
+		represents. This causes the pixels to have a more continuous color gradient.
+	</p>
 
 	<h2>Task 3: Transforms</h2>
-	<p>Overview of transformations applied to achieve a robot's signature pose in my_robot.svg, involving rotations and
-		translations.</p>
+	<h3>myrobot.svg</h3>
+	<img src="./media/task3/task3.png" style="width: 50%; height: auto;" />
+	<p>In this svg, we were trying to make the robot do the signature robot pose with its arms. To achieve this, we
+		first rotated the outer arms by 90 degrees, then changed the translation to (-50 20) and (50 -20) for the two
+		arms.</p>
+
 
 	<h2>Task 4: Barycentric Coordinates</h2>
-	<p>Explanation of barycentric coordinates for interpolating vertex values within a triangle, illustrated with a
-		colored triangle example.</p>
+	<h3>What barycentric coordinates are:</h3>
+	<img src="./media/task4/triangle.png" style="width: 50%; height: auto;" />
+	<p>Barycentric Coordinates linearly interpolate values at vertices, where a point in a triangle (defined by three
+		vertices) can be represented as a mathematical expression representing the proportional distances from the
+		vertices. This can be observed from the triangle image, the three vertices are colored green, yellow and red we
+		can see that the points closer to the red vertex are mostly red due to the weight of the red vertex being larger
+		than the other weights due to a closer proximity to the red vertex. The same is observed for the green and
+		yellow vertices. In the center where pixels are almost equidistant from all vertices, the color observed is a
+		blend between the three colors.</p>
+	<h3>svg/basic/test7.svg with default viewing parameters and sample rate 1</h3>
+	<img src="./media/task4/test7.png" style="width: 50%; height: auto;" />
+
 
 	<h2>Task 5: "Pixel Sampling" for Texture Mapping</h2>
-	<p>Comparison of nearest neighbor and bilinear sampling methods for texture mapping, focusing on implementation
-		details and visual outcomes.</p>
+	<h3> Pixel sampling and how we implemented it to perform texture mapping
+	</h3>
+	<p>Pixel sampling involves using barycentric coordinates to map the relative distance between the points and the 3
+		boundary coordinates in the sample and texture space relatively.</p>
+	<p>Nearest neighbor: Use barycentric coordinates to find the corresponding coordinate in the texture space, and use
+		the
+		color of that coordinate.</p>
+	<p>Bilinear neighbor: By using the relative distance of the coordinate to its 4 nearest neighbors in the texture
+		map,
+		compute two colors by using 2 linear interpolations in the horizontal space, then using the results to perform a
+		vertical interpolation to get the final color.</p>
+	<h3>Comparing bilinear sampling and nearest sampling</h3>
+	<h4>Bilinear sampling</h4>
+	<div style="display: flex; justify-content: space-around; align-items: center;">
+		<figure style="margin: 20px;">
+			<img src="media/task5/bilinear1.png" alt="Description of Image 2" style="width: 100%; height: auto;">
+			<figcaption style="text-align: center;">Sample Rate = 1</figcaption>
+		</figure>
+		<figure style="margin: 20px;">
+			<img src="media/task5/bilinear16.png" alt="Description of Image 3" style="width: 100%; height: auto;">
+			<figcaption style="text-align: center;">Sample Rate = 16</figcaption>
+		</figure>
+	</div>
+	<h4>Nearest pixel sampling</h4>
+	<div style="display: flex; justify-content: space-around; align-items: center;">
+		<figure style="margin: 20px;">
+			<img src="media/task5/nearest1.png" alt="Description of Image 2" style="width: 100%; height: auto;">
+			<figcaption style="text-align: center;">Sample Rate = 1</figcaption>
+		</figure>
+		<figure style="margin: 20px;">
+			<img src="media/task5/nearest16.png" alt="Description of Image 3" style="width: 100%; height: auto;">
+			<figcaption style="text-align: center;">Sample Rate = 16</figcaption>
+		</figure>
+	</div>
+	<p>At both the 1 sample per pixel and the 16 samples per pixel screenshot, we can observe that the use of bilinear
+		sampling achieves a better looking image as compared to the nearest sampling method. This would be due to the
+		linear
+		interpolation done in bilinear sampling, resulting in lower frequencies in the resultant signal as compared to
+		nearest sampling, which can result in high frequency signals and hence a less smooth image.</p>
+
+	<p>There will be a larger difference in the two methods at lower sampling rates (1 sample) as compared to higher
+		sampling rates (16 samples). This is due to the supersampling algorithm that we already have in place. This
+		means
+		that both the nearest sampling and bilinear sampling have some form of existing interpolation and the linear
+		interpolation from the bilinear sampling will be less evident.</p>
+
+
 
 	<h2>Task 6: "Level Sampling" with Mipmaps for Texture Mapping</h2>
 	<p>Explanation of level sampling using mipmaps for texture stretching, including computational details and
