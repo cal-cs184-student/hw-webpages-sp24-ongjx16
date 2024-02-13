@@ -7,8 +7,26 @@
 <body>
 	<h1>CS184 Homework 1 Writeup</h1>
 	<h2>Task 1: Drawing Single-Color Triangles</h2>
-	<p>Explanation of rasterizing triangles, including the use of a bounding box, checking triangle winding, and
-		determining if a pixel is inside the triangle.</p>
+	<h3>Walk through how you rasterize triangles in your own words.</h3>
+	<p>First, by using the minimum and maximum coordinates given in the 3 points, a bounding box of the triangle is
+		drawn. We then ran the isCounterClockwise() function to check if the triangle is wound Clockwise or
+		CounterClockwise.
+		If the triangle is wound Clockwise, we swap two of the points so that CounterClockwise winding is attained. This
+		ensures that the 3 points of the triangle are ordered such that they follow the right hand rule.</p>
+	<p>For every pixel in the bounding box, it runs through a helper function named inside(), which determines if the
+		pixel is inside the triangle using the three point-in-triangle tests. If it is inside the boundary, the
+		fill_pixel()
+		function is called, and the pixel is coloured in the rendered image. To ensure that a sample on the boundary of
+		the triangle is drawn, the check for whether to call fill_pixel() includes occasions where the sample lies on
+		the
+		boundary (checking for >= instead of just >).</p>
+
+	<h3>Explain how your algorithm is no worse than one that checks each sample within the bounding box of the triangle.
+	</h3>
+	<p>Given that I am checking each sample within the bounding box of the triangle, my algorithm would be of the same
+		efficiency.</p>
+	<h3>basic/test4.svg</h3>
+	<img src="./media/task1/task1.png" />
 
 	<h2>Task 2: Antialiasing by Supersampling</h2>
 	<p>Description of the supersampling algorithm, including sample buffer size adjustment, pixel and sub-pixel
