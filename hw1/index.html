@@ -158,8 +158,91 @@
 
 
 	<h2>Task 6: "Level Sampling" with Mipmaps for Texture Mapping</h2>
-	<p>Explanation of level sampling using mipmaps for texture stretching, including computational details and
-		trade-offs among speed, memory usage, and antialiasing power.</p>
+	<h3> What level sampling is and how we implemented it for texture mapping.
+	</h3>
+	<p>Level sampling involves storing a cache of different levels of texture samples, each with different resolutions
+		such that it can be applied to the space depending on the “stretch” of the texture. </p>
+	<p>To implement this, we first found the level (floating number) that corresponds to each pixel in the screen space.
+		To do this, we use barycentric coordinates to find the rate of change in the x and y direction of each pixel in
+		the texture space, then apply the formula to find the maximum “stretch” (L). Then, the level is computed by
+		using level (D) = log2(L).</p>
+	<p>To find a specific level, simply round D to the nearest integer.
+	</p>
+	<p>To compute the mipmap level as a continuous number, we first find the normalized distance (0<=s<=1) between D and
+			its neighboring levels. We then found the colors of each pixel at the upper and lower mipmap levels, and
+			computed a weighted average of the two colors using s. </p>
+			<h3>Tradeoffs between speed, memory usage, and antialiasing power between the three various techniques
+				(pixel sampling, level sampling, sample rate).
+			</h3>
+
+			<p>Speed:
+			<ul>
+				<li>Pixel Sampling: Nearest Neighbour Sampling is the fastest since it requires accessing only a singly
+					texel from the texture. On the other hand, Bilinear filtering requires accessing four texels, and
+					trilinear filtering requires accessing eight texels across two mipmap levels, hence as complexity of
+					filtering
+					increases, speed decreases.</li>
+				<li>Level Sampling: using mipmaps can improve rendering speed because textures are sampled from
+					lower-resolution
+					images that match the screen size of the object, reducing the number of texture lookups. Mipmap
+					level
+					selection itself adds some computational overhead (get_level() fn) but is offset by reduced texture
+					sampling
+					cost.</li>
+				<li>Sample Rate: Increasing the number of samples per pixel will reduce rendering speed as they require
+					more
+					samples per pixel, which will have to be averaged out.</li>
+			</ul>
+
+	</p>
+	<p>Memory Usage:
+	<ul>
+		<li>Pixel Sampling: This is affected by the texture’s resolution and presence of mipmaps. Nearest neighbor does
+			not require much memory usage as compared to bilinear or trilinear, which have to store much more
+			information about the surrounding texels and even different mipmaps in the case of trilinear filtering</li>
+		<li>Level Sampling: mipmaps increase memory usage because they require storing additional, smaller versions of
+			the texture.</li>
+		<li>Sample Rate: increased sample counts require more memory for framebuffer storage. Supersampling increases
+			memory usage linearly with the number of samples.</li>
+	</ul>
+	</p>
+	<p>Antialiasing Power:
+	<ul>
+		<li>Pixel Sampling: No antialiasing present in nearest neighbour, hence artifacts exist. Bilinear and Trilinear
+			filtering offer improved antialiasing by smoothing out the textures and reduce the visibility of artifacts
+			such as jaggies.</li>
+		<li>Level Sampling: significantly reduced aliasing artifacts by ensuring that sampling is done from an image
+			that closely matches the pixel density of the rendered object. Trilinear filtering between mipmap levels
+			further smooths the transition between levels, offering a higher quality antialiasing effect</li>
+		<li>Sampling Rate: Increasing the number of samples directly increases antialiasing power as the more samples
+			per pixel taken means a more accurate representation of the sample image. This reduces artifacts such as
+			jaggies and moire patterns.</li>
+	</ul>
+	</p>
+	<h3>test7.svg (our own png)</h3>
+	<div style="display: flex; justify-content: space-around; align-items: center;">
+		<figure style="margin: 20px;">
+			<img src="media/task6/zeronearest.png" alt="Description of Image 2" style="width: 100%; height: auto;">
+			<figcaption style="text-align: center;">L_ZERO and P_NEAREST</figcaption>
+		</figure>
+		<figure style="margin: 20px;">
+			<img src="media/task6/zerolinear.png" alt="Description of Image 3" style="width: 100%; height: auto;">
+			<figcaption style="text-align: center;">L_ZERO and P_LINEAR</figcaption>
+		</figure>
+	</div>
+	<div style="display: flex; justify-content: space-around; align-items: center;">
+		<figure style="margin: 20px;">
+			<img src="media/task6/nearestnearest.png" alt="Description of Image 2" style="width: 100%; height: auto;">
+			<figcaption style="text-align: center;">L_NEAREST and P_NEAREST</figcaption>
+		</figure>
+		<figure style="margin: 20px;">
+			<img src="media/task6/nearestlinear.png" alt="Description of Image 3" style="width: 100%; height: auto;">
+			<figcaption style="text-align: center;">L_NEAREST and P_LINEAR</figcaption>
+		</figure>
+	</div>
+
+
+
 </body>
 
 </html>
