@@ -1,11 +1,16 @@
 <html>
 
-<head style="margin: 0 auto; width: 80%;">
+<head>
 	<title>CS184 Homework 1 Writeup</title>
 </head>
 
-<body style="margin: 0 auto; width: 80%;">
+<body style="margin: 0 auto; width: 80%; height: 90%">
 	<h1>CS184 Homework 1 Writeup</h1>
+	<h3>Written By: Ong Jing Xuan (3039759595) and Marcus Yeo (3039760661)</h3>
+	<p><i>Hosted on:
+			<a href="https://cal-cs184-student.github.io/hw-webpages-sp24-ongjx16/hw1/index.html"
+				target="_blank">https://cal-cs184-student.github.io/hw-webpages-sp24-ongjx16/hw1/index.html</a>
+		</i></p>
 	<h2>Task 1: Drawing Single-Color Triangles</h2>
 	<h3>Walk through how you rasterize triangles in your own words.</h3>
 	<p>First, by using the minimum and maximum coordinates given in the 3 points, a bounding box of the triangle is
@@ -26,7 +31,8 @@
 	<p>Given that I am checking each sample within the bounding box of the triangle, my algorithm would be of the same
 		efficiency.</p>
 	<h3>basic/test4.svg</h3>
-	<img src="./media/task1/task1.png" style="width: 50%; height: auto; display: block; margin-left: auto; margin-right: auto;" />
+	<img src="./media/task1/task1.png"
+		style="width: 50%; height: auto; display: block; margin-left: auto; margin-right: auto;" />
 
 	<h2>Task 2: Antialiasing by Supersampling</h2>
 	<h3>Supersampling algorithm:</h3>
@@ -97,7 +103,8 @@
 
 	<h2>Task 4: Barycentric Coordinates</h2>
 	<h3>What barycentric coordinates are:</h3>
-	<img src="./media/task4/triangle.png" style="width: 50%; height: auto; display: block; margin-left: auto; margin-right: auto;" />
+	<img src="./media/task4/triangle.png"
+		style="width: 50%; height: auto; display: block; margin-left: auto; margin-right: auto;" />
 	<p>Barycentric Coordinates linearly interpolate values at vertices, where a point in a triangle (defined by three
 		vertices) can be represented as a mathematical expression representing the proportional distances from the
 		vertices. This can be observed from the triangle image, the three vertices are colored green, yellow and red we
@@ -124,9 +131,9 @@
 	<h3>Comparing bilinear sampling and nearest sampling</h3>
 	<h4>Bilinear sampling</h4>
 	<div style="display: flex; justify-content: space-around; align-items: center;margin: 0 auto; width: 60%;"">
-		<figure style="margin: 20px;">
-			<img src="media/task5/bilinear1.png" alt="Description of Image 2" style="width: 100%; height: auto;">
-			<figcaption style="text-align: center;">Sample Rate = 1</figcaption>
+		<figure style=" margin: 20px;">
+		<img src="media/task5/bilinear1.png" alt="Description of Image 2" style="width: 100%; height: auto;">
+		<figcaption style="text-align: center;">Sample Rate = 1</figcaption>
 		</figure>
 		<figure style="margin: 20px;">
 			<img src="media/task5/bilinear16.png" alt="Description of Image 3" style="width: 100%; height: auto;">
@@ -135,9 +142,9 @@
 	</div>
 	<h4>Nearest pixel sampling</h4>
 	<div style="display: flex; justify-content: space-around; align-items: center;margin: 0 auto; width: 60%;"">
-		<figure style="margin: 20px;">
-			<img src="media/task5/nearest1.png" alt="Description of Image 2" style="width: 100%; height: auto;">
-			<figcaption style="text-align: center;">Sample Rate = 1</figcaption>
+		<figure style=" margin: 20px;">
+		<img src="media/task5/nearest1.png" alt="Description of Image 2" style="width: 100%; height: auto;">
+		<figcaption style="text-align: center;">Sample Rate = 1</figcaption>
 		</figure>
 		<figure style="margin: 20px;">
 			<img src="media/task5/nearest16.png" alt="Description of Image 3" style="width: 100%; height: auto;">
@@ -222,9 +229,9 @@
 	</p>
 	<h3>test7.svg (our own png)</h3>
 	<div style="display: flex; justify-content: space-around; align-items: center;margin: 0 auto; width: 60%;"">
-		<figure style="margin: 20px;">
-			<img src="media/task6/zeronearest.png" alt="Description of Image 2" style="width: 100%; height: auto;">
-			<figcaption style="text-align: center;">L_ZERO and P_NEAREST</figcaption>
+		<figure style=" margin: 20px;">
+		<img src="media/task6/zeronearest.png" alt="Description of Image 2" style="width: 100%; height: auto;">
+		<figcaption style="text-align: center;">L_ZERO and P_NEAREST</figcaption>
 		</figure>
 		<figure style="margin: 20px;">
 			<img src="media/task6/zerolinear.png" alt="Description of Image 3" style="width: 100%; height: auto;">
@@ -232,9 +239,9 @@
 		</figure>
 	</div>
 	<div style="display: flex; justify-content: space-around; align-items: center;margin: 0 auto; width: 60%;"">
-		<figure style="margin: 20px;">
-			<img src="media/task6/nearestnearest.png" alt="Description of Image 2" style="width: 100%; height: auto;">
-			<figcaption style="text-align: center;">L_NEAREST and P_NEAREST</figcaption>
+		<figure style=" margin: 20px;">
+		<img src="media/task6/nearestnearest.png" alt="Description of Image 2" style="width: 100%; height: auto;">
+		<figcaption style="text-align: center;">L_NEAREST and P_NEAREST</figcaption>
 		</figure>
 		<figure style="margin: 20px;">
 			<img src="media/task6/nearestlinear.png" alt="Description of Image 3" style="width: 100%; height: auto;">
