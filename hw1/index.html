@@ -1,10 +1,10 @@
 <html>
 
-<head>
+<head style="margin: 0 auto; width: 80%;">
 	<title>CS184 Homework 1 Writeup</title>
 </head>
 
-<body>
+<body style="margin: 0 auto; width: 80%;">
 	<h1>CS184 Homework 1 Writeup</h1>
 	<h2>Task 1: Drawing Single-Color Triangles</h2>
 	<h3>Walk through how you rasterize triangles in your own words.</h3>
@@ -26,7 +26,7 @@
 	<p>Given that I am checking each sample within the bounding box of the triangle, my algorithm would be of the same
 		efficiency.</p>
 	<h3>basic/test4.svg</h3>
-	<img src="./media/task1/task1.png" style="width: 50%; height: auto;" />
+	<img src="./media/task1/task1.png" style="width: 50%; height: auto; display: block; margin-left: auto; margin-right: auto;" />
 
 	<h2>Task 2: Antialiasing by Supersampling</h2>
 	<h3>Supersampling algorithm:</h3>
@@ -88,7 +88,8 @@
 
 	<h2>Task 3: Transforms</h2>
 	<h3>myrobot.svg</h3>
-	<img src="./media/task3/task3.png" style="width: 50%; height: auto;" />
+	<img src="./media/task3/task3.png"
+		style="width: 50%; height: auto; display: block; margin-left: auto; margin-right: auto;" />
 	<p>In this svg, we were trying to make the robot do the signature robot pose with its arms. To achieve this, we
 		first rotated the outer arms by 90 degrees, then changed the translation to (-50 20) and (50 -20) for the two
 		arms.</p>
@@ -96,7 +97,7 @@
 
 	<h2>Task 4: Barycentric Coordinates</h2>
 	<h3>What barycentric coordinates are:</h3>
-	<img src="./media/task4/triangle.png" style="width: 50%; height: auto;" />
+	<img src="./media/task4/triangle.png" style="width: 50%; height: auto; display: block; margin-left: auto; margin-right: auto;" />
 	<p>Barycentric Coordinates linearly interpolate values at vertices, where a point in a triangle (defined by three
 		vertices) can be represented as a mathematical expression representing the proportional distances from the
 		vertices. This can be observed from the triangle image, the three vertices are colored green, yellow and red we
@@ -122,7 +123,7 @@
 		vertical interpolation to get the final color.</p>
 	<h3>Comparing bilinear sampling and nearest sampling</h3>
 	<h4>Bilinear sampling</h4>
-	<div style="display: flex; justify-content: space-around; align-items: center;">
+	<div style="display: flex; justify-content: space-around; align-items: center;margin: 0 auto; width: 60%;"">
 		<figure style="margin: 20px;">
 			<img src="media/task5/bilinear1.png" alt="Description of Image 2" style="width: 100%; height: auto;">
 			<figcaption style="text-align: center;">Sample Rate = 1</figcaption>
@@ -133,7 +134,7 @@
 		</figure>
 	</div>
 	<h4>Nearest pixel sampling</h4>
-	<div style="display: flex; justify-content: space-around; align-items: center;">
+	<div style="display: flex; justify-content: space-around; align-items: center;margin: 0 auto; width: 60%;"">
 		<figure style="margin: 20px;">
 			<img src="media/task5/nearest1.png" alt="Description of Image 2" style="width: 100%; height: auto;">
 			<figcaption style="text-align: center;">Sample Rate = 1</figcaption>
@@ -220,7 +221,7 @@
 	</ul>
 	</p>
 	<h3>test7.svg (our own png)</h3>
-	<div style="display: flex; justify-content: space-around; align-items: center;">
+	<div style="display: flex; justify-content: space-around; align-items: center;margin: 0 auto; width: 60%;"">
 		<figure style="margin: 20px;">
 			<img src="media/task6/zeronearest.png" alt="Description of Image 2" style="width: 100%; height: auto;">
 			<figcaption style="text-align: center;">L_ZERO and P_NEAREST</figcaption>
@@ -230,7 +231,7 @@
 			<figcaption style="text-align: center;">L_ZERO and P_LINEAR</figcaption>
 		</figure>
 	</div>
-	<div style="display: flex; justify-content: space-around; align-items: center;">
+	<div style="display: flex; justify-content: space-around; align-items: center;margin: 0 auto; width: 60%;"">
 		<figure style="margin: 20px;">
 			<img src="media/task6/nearestnearest.png" alt="Description of Image 2" style="width: 100%; height: auto;">
 			<figcaption style="text-align: center;">L_NEAREST and P_NEAREST</figcaption>
