@@ -1,7 +1,73 @@
 <html>
-	<head>
-	</head>
-	<body>
-		Homework 2 index.html here
-	</body>
+
+<head>
+	<title>CS184 Homework 2 Writeup</title>
+</head>
+
+<body style="margin: 30 auto; width: 80%">
+	<h1>CS184 Homework 1 Writeup</h1>
+	<h3>Written By: Ong Jing Xuan (3039759595)</h3>
+	<p><i>Hosted on:
+			<a href="https://cal-cs184-student.github.io/hw-webpages-sp24-ongjx16/hw1/index.html"
+				target="_blank">https://cal-cs184-student.github.io/hw-webpages-sp24-ongjx16/hw2/index.html</a>
+		</i></p>
+
+	<h2>Task 1: Bezier Curves with 1D de Casteljau Subdivision (10 pts)</h2>
+	<h3>Briefly explain de Casteljau's algorithm and how you implemented it in order to evaluate Bezier curves.</h3>
+	<p>
+		Given a set of control points, de Casteljau's algorithm uses linear interpolation between adjacent points and generates intermediate sets of control points recursively until only one point is generated, which is the point at which the resultant Bezier curve will pass through. The algorithm uses a predetermined float t that determines the extent of linear interpolation. 
+
+		To implement this for a specific layer of evaluation, I took the input set of points and iterated through all the points. For each point, I used the formula of Vector2D interpolatedPoint = points[i] + t * (points[i + 1] - points[i]) to get the resultant point in between the point and its adjacent point. This interpolatedPoint is then added to an array of points that are then returned as the result of the function. 
+	</p>
+	<h3>Bezier Curve with 6 control points</h3>
+	<div style="display: flex; justify-content: space-around; align-items: center;">
+		<figure style="margin: 20px;">
+			<img src="media/task1/step1.png" alt="Description of Image 1" style="width: 100%; height: auto;">
+			<figcaption style="text-align: center;">Step 1</figcaption>
+		</figure>
+		<figure style="margin: 20px;">
+			<img src="media/task1/step2.png" alt="Description of Image 2" style="width: 100%; height: auto;">
+			<figcaption style="text-align: center;">Step 2</figcaption>
+		</figure>
+		<figure style="margin: 20px;">
+			<img src="media/task1/step3.png" alt="Description of Image 3" style="width: 100%; height: auto;">
+			<figcaption style="text-align: center;">Step 3</figcaption>
+		</figure>
+		<figure style="margin: 20px;">
+			<img src="media/task1/step4.png" alt="Description of Image 3" style="width: 100%; height: auto;">
+			<figcaption style="text-align: center;">Step 4</figcaption>
+		</figure>
+	</div>
+	<div style="display: flex; justify-content: space-around; align-items: center;">
+		<figure style="margin: 20px;">
+			<img src="media/task1/step5.png" alt="Description of Image 1" style="width: 100%; height: auto;">
+			<figcaption style="text-align: center;">Step 5</figcaption>
+		</figure>
+		<figure style="margin: 20px;">
+			<img src="media/task1/step6.png" alt="Description of Image 2" style="width: 100%; height: auto;">
+			<figcaption style="text-align: center;">Step 6</figcaption>
+		</figure>
+		<figure style="margin: 20px;">
+			<img src="media/task1/step7.png" alt="Description of Image 3" style="width: 100%; height: auto;">
+			<figcaption style="text-align: center;">Step 7</figcaption>
+		</figure>
+
+	</div>
+	<h3>Modified control points and t</h3>
+	<img src="./media/task1/different.png"
+		style="width: 50%; height: auto; display: block; margin-left: auto; margin-right: auto;" />
+
+
+	<h2>Task 2: </h2>
+
+
+	<h2>Task 3: </h2>
+	<h3></h3>
+
+
+
+
+
+</body>
+
 </html>
