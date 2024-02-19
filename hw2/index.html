@@ -99,13 +99,19 @@
 	<h2>Task 3: Area-Weighted Vertex Normals</h2>
 	<h3>Implementation of area-weighted vertex normals</h3>
 	<p>
-		First, to iterate through all faces I used a do-while loop to iterate through all the faces using the twin structure of the halfedge, and stopping once I return back to the starting halfedge. 
+		First, to iterate through all faces I used a do-while loop to iterate through all the faces using the twin
+		structure of the halfedge, and stopping once I return back to the starting halfedge.
 	</p>
 	<p>
-		For every iteration of the do-while loop, I obtain the 3 vertices of the current face. Then, I calculate two edge vectors using the 3 vertices, and used the two vectors to obtain the cross product, and the area of the triangle (half the magnitude of the normal vector). Then, I multiply the unit normal vector with the area of the triangle, and add it to the sum of normals for all faces. Additionally, I also kept track of the sum of all areas of the faces.
+		For every iteration of the do-while loop, I obtain the 3 vertices of the current face. Then, I calculate two
+		edge vectors using the 3 vertices, and used the two vectors to obtain the cross product, and the area of the
+		triangle (half the magnitude of the normal vector). Then, I multiply the unit normal vector with the area of the
+		triangle, and add it to the sum of normals for all faces. Additionally, I also kept track of the sum of all
+		areas of the faces.
 	</p>
 	<p>
-		Lastly, I normalised the sum of all area-weighted normals by dividing the sum by the total area of all faces. This normalised sum is then the returned as the result of the <i>Vertex::normal()</i> function.
+		Lastly, I normalised the sum of all area-weighted normals by dividing the sum by the total area of all faces.
+		This normalised sum is then the returned as the result of the <i>Vertex::normal()</i> function.
 	</p>
 
 	<h3>Screenshots of dae/teapot.dae</h3>
@@ -119,6 +125,31 @@
 			<figcaption style="text-align: center;">Phong Shading</figcaption>
 		</figure>
 
+	</div>
+
+	<!-- Briefly explain how you implemented the edge flip operation and describe any interesting implementation / debugging tricks you have used.
+Show screenshots of the teapot before and after some edge flips.
+Write about your eventful debugging journey, if you have experienced one. -->
+	<h2>Task 4: Edge Flip</h2>
+	<h3>Implementation of edge flip operation</h3>
+	<p>
+		First, I obtained the pointers to all the relevant halfedges, faces, edges, and vertices connected to a specific edge. Then, I went through all the elements (vertices, edges and faces) and updated the half-edge pointer in each of their structures. Thereafter, I updated each of the 6 half-edges using <i>setNeighbours()</i>, and returned the new edge pointer. 
+	</p>
+	<h3>Debugging journey</h3>
+	<p>
+		For a long while, I was stuck with a code that managed to flip an edge only once, but stopped working once I flipped adjacent edges. To try to work out whats was happening, I first used <i>check_for()</i> to check all the relevant vertices, edges and faces. However, they all seemed to be producing seemingly logical results, so I then checked for all the 6 half-edges. Then, I realised based on the number of pointers each half-edge had, the wrong half-edge was being assigned as a pointer to the face of the edge's twin. Once I properly assigned the pointers of all the half-edges, the code managed to work properly. 
+	</p>
+	<h3>Teapot before and after some flips</h3>
+	<div style="display: flex; justify-content: space-around; align-items: center;">
+
+		<figure style="margin: 20px;">
+			<img src="media/task4/before.png" alt="Description of Image 3" style="width: 100%; height: auto;">
+			<figcaption style="text-align: center;">Before</figcaption>
+		</figure>
+		<figure style="margin: 20px;">
+			<img src="media/task4/after.png" alt="Description of Image 1" style="width: 100%; height: auto;">
+			<figcaption style="text-align: center;">After</figcaption>
+		</figure>
 	</div>
 
 
