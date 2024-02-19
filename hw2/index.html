@@ -79,7 +79,13 @@
 		parameter v.
 	</p>
 	<p>
-		To implement this in code, I first implemented the same thing as in task 1 for the <u>evaluateStep()</u> function, but working with Vector3 instead of Vector2 data structures. For <u>evaluate1D()</u>, I then called <u>evaluateStep()</u> recursively until only one vector3D point is returned, which would be the resultant vector produced for a set of control points in a row. Lastly, in  <u>evaluate()</u>, I first ran through each row in <u>controlPoints</u> and called <u>evaluate1D()</u> for each row with parameter u, adding each vector obtained to an initialised array called <u>interpolatedPoints</u>. Then, I ran <u>evaluate1D()</u> with parameter v using  <u>interpolatedPoints</u>, then returned the resultant point on the Bezier curve. 
+		To implement this in code, I first implemented the same thing as in task 1 for the <i>evaluateStep()</i>
+		function, but working with Vector3 instead of Vector2 data structures. For <i>evaluate1D()</i>, I then called
+		<i>evaluateStep()</i> recursively until only one vector3D point is returned, which would be the resultant vector
+		produced for a set of control points in a row. Lastly, in <i>evaluate()</i>, I first ran through each row in
+		<i>controlPoints</i> and called <i>evaluate1D()</i> for each row with parameter u, adding each vector obtained
+		to an initialised array called <i>interpolatedPoints</i>. Then, I ran <i>evaluate1D()</i> with parameter v using
+		<i>interpolatedPoints</i>, then returned the resultant point on the Bezier curve.
 
 	<h3>Screenshot of bez/teapot.bez</h3>
 	<img src="./media/task2/teapot.png"
