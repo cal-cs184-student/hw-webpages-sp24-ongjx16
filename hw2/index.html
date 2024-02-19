@@ -40,16 +40,20 @@
 			<img src="media/task1/step3.png" alt="Description of Image 3" style="width: 100%; height: auto;">
 			<figcaption style="text-align: center;">Step 3</figcaption>
 		</figure>
+	</div>
+	<div>
+
 		<figure style="margin: 20px;">
 			<img src="media/task1/step4.png" alt="Description of Image 3" style="width: 100%; height: auto;">
 			<figcaption style="text-align: center;">Step 4</figcaption>
 		</figure>
-	</div>
-	<div style="display: flex; justify-content: space-around; align-items: center;">
 		<figure style="margin: 20px;">
 			<img src="media/task1/step5.png" alt="Description of Image 1" style="width: 100%; height: auto;">
 			<figcaption style="text-align: center;">Step 5</figcaption>
 		</figure>
+	</div>
+	<div style="display: flex; justify-content: space-around; align-items: center;">
+
 		<figure style="margin: 20px;">
 			<img src="media/task1/step6.png" alt="Description of Image 2" style="width: 100%; height: auto;">
 			<figcaption style="text-align: center;">Step 6</figcaption>
@@ -92,8 +96,30 @@
 		style="width: 50%; height: auto; display: block; margin-left: auto; margin-right: auto;" />
 
 
-	<h2>Task 3: </h2>
-	<h3></h3>
+	<h2>Task 3: Area-Weighted Vertex Normals</h2>
+	<h3>Implementation of area-weighted vertex normals</h3>
+	<p>
+		First, to iterate through all faces I used a do-while loop to iterate through all the faces using the twin structure of the halfedge, and stopping once I return back to the starting halfedge. 
+	</p>
+	<p>
+		For every iteration of the do-while loop, I obtain the 3 vertices of the current face. Then, I calculate two edge vectors using the 3 vertices, and used the two vectors to obtain the cross product, and the area of the triangle (half the magnitude of the normal vector). Then, I multiply the unit normal vector with the area of the triangle, and add it to the sum of normals for all faces. Additionally, I also kept track of the sum of all areas of the faces.
+	</p>
+	<p>
+		Lastly, I normalised the sum of all area-weighted normals by dividing the sum by the total area of all faces. This normalised sum is then the returned as the result of the <i>Vertex::normal()</i> function.
+	</p>
+
+	<h3>Screenshots of dae/teapot.dae</h3>
+	<div style="display: flex; justify-content: space-around; align-items: center;">
+		<figure style="margin: 20px;">
+			<img src="media/task3/flatshading.png" alt="Description of Image 1" style="width: 100%; height: auto;">
+			<figcaption style="text-align: center;">Flat Shading</figcaption>
+		</figure>
+		<figure style="margin: 20px;">
+			<img src="media/task3/phong.png" alt="Description of Image 3" style="width: 100%; height: auto;">
+			<figcaption style="text-align: center;">Phong Shading</figcaption>
+		</figure>
+
+	</div>
 
 
 
