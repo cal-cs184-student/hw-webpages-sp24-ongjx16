@@ -15,9 +15,16 @@
 	<h2>Task 1: Bezier Curves with 1D de Casteljau Subdivision (10 pts)</h2>
 	<h3>Briefly explain de Casteljau's algorithm and how you implemented it in order to evaluate Bezier curves.</h3>
 	<p>
-		Given a set of control points, de Casteljau's algorithm uses linear interpolation between adjacent points and generates intermediate sets of control points recursively until only one point is generated, which is the point at which the resultant Bezier curve will pass through. The algorithm uses a predetermined float t that determines the extent of linear interpolation. 
-
-		To implement this for a specific layer of evaluation, I took the input set of points and iterated through all the points. For each point, I used the formula of Vector2D interpolatedPoint = points[i] + t * (points[i + 1] - points[i]) to get the resultant point in between the point and its adjacent point. This interpolatedPoint is then added to an array of points that are then returned as the result of the function. 
+		Given a set of control points, de Casteljau's algorithm uses linear interpolation between adjacent points and
+		generates intermediate sets of control points recursively until only one point is generated, which is the point
+		at which the resultant Bezier curve will pass through. The algorithm uses a predetermined float t that
+		determines the extent of linear interpolation.
+	</p>
+	<p>
+		To implement this for a specific layer of evaluation, I took the input set of points and iterated through all
+		the points. For each point, I used the formula of Vector2D interpolatedPoint = points[i] + t * (points[i + 1] -
+		points[i]) to get the resultant point in between the point and its adjacent point. This interpolatedPoint is
+		then added to an array of points that are then returned as the result of the function.
 	</p>
 	<h3>Bezier Curve with 6 control points</h3>
 	<div style="display: flex; justify-content: space-around; align-items: center;">
@@ -58,7 +65,25 @@
 		style="width: 50%; height: auto; display: block; margin-left: auto; margin-right: auto;" />
 
 
-	<h2>Task 2: </h2>
+	<h2>Task 2: Bezier Surfaces with Separable 1D de Casteljau</h2>
+	<h3>Briefly explain how de Casteljau algorithm extends to Bezier surfaces and how you implemented it in order to
+		evaluate Bezier surfaces.</h3>
+	<p>
+		The de Casteljau algorithm for Bezier surfaces is basically an extension of that for a curve. Given a set of nxn
+		control points (2d array), we first use the 1D algorithm to calculate a resultant point for each row of control
+		points, using the parameter u (equivalent to parameter t in the 1D algorithm).
+	</p>
+	<p>
+		With the group of points obtained from all rows, we then use these points to perform linear interpolation again
+		(in the other direction) to get the resultant point that would appear on the Bezier surface, this time using the
+		parameter v.
+	</p>
+	<p>
+		To implement this in code, I first implemented the same thing as in task 1 for the <u>evaluateStep()</u> function, but working with Vector3 instead of Vector2 data structures. For <u>evaluate1D()</u>, I then called <u>evaluateStep()</u> recursively until only one vector3D point is returned, which would be the resultant vector produced for a set of control points in a row. Lastly, in  <u>evaluate()</u>, I first ran through each row in <u>controlPoints</u> and called <u>evaluate1D()</u> for each row with parameter u, adding each vector obtained to an initialised array called <u>interpolatedPoints</u>. Then, I ran <u>evaluate1D()</u> with parameter v using  <u>interpolatedPoints</u>, then returned the resultant point on the Bezier curve. 
+
+	<h3>Screenshot of bez/teapot.bez</h3>
+	<img src="./media/task2/teapot.png"
+		style="width: 50%; height: auto; display: block; margin-left: auto; margin-right: auto;" />
 
 
 	<h2>Task 3: </h2>
