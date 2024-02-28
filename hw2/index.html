@@ -140,11 +140,19 @@ Write about your eventful debugging journey, if you have experienced one. -->
 	<h2>Task 4: Edge Flip</h2>
 	<h3>Implementation of edge flip operation</h3>
 	<p>
-		First, I obtained the pointers to all the relevant halfedges, faces, edges, and vertices connected to a specific edge. Then, I went through all the elements (vertices, edges and faces) and updated the half-edge pointer in each of their structures. Thereafter, I updated each of the 6 half-edges using <i>setNeighbours()</i>, and returned the new edge pointer. 
+		First, I obtained the pointers to all the relevant halfedges, faces, edges, and vertices connected to a specific
+		edge. Then, I went through all the elements (vertices, edges and faces) and updated the half-edge pointer in
+		each of their structures. Thereafter, I updated each of the 6 half-edges using <i>setNeighbours()</i>, and
+		returned the new edge pointer.
 	</p>
 	<h3>Debugging journey</h3>
 	<p>
-		For a long while, I was stuck with a code that managed to flip an edge only once, but stopped working once I flipped adjacent edges. To try to work out whats was happening, I first used <i>check_for()</i> to check all the relevant vertices, edges and faces. However, they all seemed to be producing seemingly logical results, so I then checked for all the 6 half-edges. Then, I realised based on the number of pointers each half-edge had, the wrong half-edge was being assigned as a pointer to the face of the edge's twin. Once I properly assigned the pointers of all the half-edges, the code managed to work properly. 
+		For a long while, I was stuck with a code that managed to flip an edge only once, but stopped working once I
+		flipped adjacent edges. To try to work out whats was happening, I first used <i>check_for()</i> to check all the
+		relevant vertices, edges and faces. However, they all seemed to be producing seemingly logical results, so I
+		then checked for all the 6 half-edges. Then, I realised based on the number of pointers each half-edge had, the
+		wrong half-edge was being assigned as a pointer to the face of the edge's twin. Once I properly assigned the
+		pointers of all the half-edges, the code managed to work properly.
 	</p>
 	<h3>Teapot before and after some flips</h3>
 	<div style="display: flex; justify-content: space-around; align-items: center;">
@@ -162,17 +170,25 @@ Write about your eventful debugging journey, if you have experienced one. -->
 	<h2>Task 5: Edge Split</h2>
 	<h3>Implementation of edge split operation and debugging journey</h3>
 	<p>
-		First, I declared the pointers to all related half edges (12), vertices (5), edges (4) and faces (4), including the new ones that are created due to an edge split. When declaring the new vertex, I also calculated its position by finding the midpoint of the two vertices of the edge that is being split.
+		First, I declared the pointers to all related half edges (12), vertices (5), edges (4) and faces (4), including
+		the new ones that are created due to an edge split. When declaring the new vertex, I also calculated its
+		position by finding the midpoint of the two vertices of the edge that is being split.
 	</p>
 	<p>
-		Thereafter, I updated the halfedge pointer of all the vertices, edges, and faces, then update all halfedges using <i>setNeighbours()</i>, and returned the pointer to the new vertex created. Below shows the corresponding elements that are declared and created due to an edge split. 
+		Thereafter, I updated the halfedge pointer of all the vertices, edges, and faces, then update all halfedges
+		using <i>setNeighbours()</i>, and returned the pointer to the new vertex created. Below shows the corresponding
+		elements that are declared and created due to an edge split.
 	</p>
 	<img src="./media/task5/diagram.jpeg"
 		style="width: 50%; height: auto; display: block; margin-left: auto; margin-right: auto;" />
 	<p>
-		Implementing this was relatively straightforward, especially after implementing edge flip, as the concept is very similar. I think one interesting thing to note is that for quite a while, I was declaring two edge pointers per edge, instead of one, which resulted in very confusing results, especially when I moved on to part 6. Thus, even though it worked seemingly well, when it came to implementing subdivisions, I realised that it was flawed and had to return to edit the code such that each edge only had one edge pointer declared. 
+		Implementing this was relatively straightforward, especially after implementing edge flip, as the concept is
+		very similar. I think one interesting thing to note is that for quite a while, I was declaring two edge pointers
+		per edge, instead of one, which resulted in very confusing results, especially when I moved on to part 6. Thus,
+		even though it worked seemingly well, when it came to implementing subdivisions, I realised that it was flawed
+		and had to return to edit the code such that each edge only had one edge pointer declared.
 	</p>
-	
+
 	<h3>Teapot before and after some splits</h3>
 	<div style="display: flex; justify-content: space-around; align-items: center;">
 
@@ -196,6 +212,100 @@ Write about your eventful debugging journey, if you have experienced one. -->
 		<figure style="margin: 20px;">
 			<img src="media/task5/splitnflip.png" alt="Description of Image 1" style="width: 100%; height: auto;">
 			<figcaption style="text-align: center;">After</figcaption>
+		</figure>
+	</div>
+
+	<h2>Task 6: Loop Subdivision</h2>
+	<h3>Implementation of loop subdivision</h3>
+	<p>
+		First, I iterated through every vertex in the input mesh and set isNew = false, as well as calculated its new position and stored it in v->newPosition. Thereafter, I iterated through every edge in the input mesh, and used the formula given to calculate the new position of the vertex that would be created after the edge splits, and stored it into edge->newPosition.
+	</p>
+	<p>
+		Then, I iterated through every edge in the input mesh and split them. To ensure that I am only splitting edges in the input edge, I checked that the edge to be split is drawn between two old vertexes (isNew = false). To correctly update the new edges, I also edited the <i>splitEdge</i> function, such that the two new edges created (blue edges) are recorded as new, while the black edges (old edge and one of the new edges) is recorded as old. This ensures that in the edgeFlip part, I am only flipping edges that are 'new'. Additionally, I also marked the new vertex created from the edge split as a new vertex, and assigned its newPosition as the newPosition value of the edge. 
+	</p>
+	<p>
+		After splitting every edge, I iterated through all the edges again, and flipped edges that are marked as new, that connects an old and new vertex.
+	</p>
+	<p>
+		Lastly, I iterated through all the vertexes and assigned its position value as its newPosition value. 
+	</p>
+
+	<h3>Debugging Journey</h3>
+	<p>
+		One problem I faced during this implementation was that I mistakenly reassigned all the existing vertexes as old vertexes in my edgeSplit function, but this proved to cause an infinite loop as I was constantly changing new vertexes to old, and thus the amount of old vertexes to iterate through was not decreasing. To figure out what was wrong, I utilised stdout statements to figure out which loop was stuck, and then investigated which parts were the problem by toggling isNew value assignments and ultimately realised that the old vertexes were the problem. 
+	</p>
+
+	<h3>Behaviour of meshes after loop subdivision</h3>
+	<div style="display: flex; justify-content: space-around; align-items: center;">
+
+		<figure style="margin: 20px;">
+			<img src="media/task6/weirdbefore.png" alt="Description of Image 3" style="width: 100%; height: auto;">
+			<figcaption style="text-align: center;">Before</figcaption>
+		</figure>
+		<figure style="margin: 20px;">
+			<img src="media/task6/weirdafter.png" alt="Description of Image 1" style="width: 100%; height: auto;">
+			<figcaption style="text-align: center;">After</figcaption>
+		</figure>
+	</div>
+	<div style="display: flex; justify-content: space-around; align-items: center;">
+
+		<figure style="margin: 20px;">
+			<img src="media/task6/torusbefore.png" alt="Description of Image 3" style="width: 100%; height: auto;">
+			<figcaption style="text-align: center;">Before</figcaption>
+		</figure>
+		<figure style="margin: 20px;">
+			<img src="media/task6/torusafter1.png" alt="Description of Image 1" style="width: 100%; height: auto;">
+			<figcaption style="text-align: center;">After 1 Iteration</figcaption>
+		</figure>
+		<figure style="margin: 20px;">
+			<img src="media/task6/torusafter2.png" alt="Description of Image 1" style="width: 100%; height: auto;">
+			<figcaption style="text-align: center;">After 2 Iterations</figcaption>
+		</figure>
+	</div>
+	<p>
+		Loop subdivision causes meshes to not only shrink in volume, but also smooth sharp corners and edges. With every
+		iteration of subdivision, the sharp edges and corners of meshes become more rounded. One method to prevent this
+		would be to pre-split edges at which one desires to retain the sharpness of, since the local geometric
+		complexity around these areas would increase due to pre-splitting, therefore reducing the effects of the
+		averaging process involved in loop subdivision.
+	</p>
+
+	<h3>dae/cube.dae</h3>
+	<h4>
+		Can you pre-process the cube with edge flips and splits so that the cube subdivides symmetrically? Document
+		these effects and explain why they occur. Also explain how your pre-processing helps alleviate the effects.
+	</h4>
+	<p>
+		Given that the initial mesh of the cube has only two triangles on each face, the lack of symmetry in the mesh is expounded as the mesh subdivides. Thus, to ensure that the cube subdivides symmetrically, we would have to preprocess the mesh such that each face is symmetric. To do so, I split the slanted edge on each face such that there are 4 triangles on each face instead of 2, lending each face a symmetry that then translates to symmetric subdivision. 
+	</p>
+	<div style="display: flex; justify-content: space-around; align-items: center;">
+
+		<figure style="margin: 20px;">
+			<img src="media/task6/asym0.png" alt="Description of Image 3" style="width: 100%; height: auto;">
+			<figcaption style="text-align: center;">Asymmetric Cube</figcaption>
+		</figure>
+		<figure style="margin: 20px;">
+			<img src="media/task6/asym2.png" alt="Description of Image 1" style="width: 100%; height: auto;">
+			<figcaption style="text-align: center;">After 2 Iterations</figcaption>
+		</figure>
+		<figure style="margin: 20px;">
+			<img src="media/task6/asym4.png" alt="Description of Image 1" style="width: 100%; height: auto;">
+			<figcaption style="text-align: center;">After 4 Iterations</figcaption>
+		</figure>
+	</div>
+	<div style="display: flex; justify-content: space-around; align-items: center;">
+
+		<figure style="margin: 20px;">
+			<img src="media/task6/sym0.png" alt="Description of Image 3" style="width: 100%; height: auto;">
+			<figcaption style="text-align: center;">Symmetric Cube</figcaption>
+		</figure>
+		<figure style="margin: 20px;">
+			<img src="media/task6/sym2.png" alt="Description of Image 1" style="width: 100%; height: auto;">
+			<figcaption style="text-align: center;">After 2 Iterations</figcaption>
+		</figure>
+		<figure style="margin: 20px;">
+			<img src="media/task6/sym4.png" alt="Description of Image 1" style="width: 100%; height: auto;">
+			<figcaption style="text-align: center;">After 4 Iterations</figcaption>
 		</figure>
 	</div>
 
