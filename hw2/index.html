@@ -12,6 +12,13 @@
 				target="_blank">https://cal-cs184-student.github.io/hw-webpages-sp24-ongjx16/hw2/index.html</a>
 		</i></p>
 
+	<h2>
+		Overview
+	</h2>
+	<p>
+
+	</p>
+
 	<h2>Task 1: Bezier Curves with 1D de Casteljau Subdivision (10 pts)</h2>
 	<h3>Briefly explain de Casteljau's algorithm and how you implemented it in order to evaluate Bezier curves.</h3>
 	<p>
@@ -148,6 +155,46 @@ Write about your eventful debugging journey, if you have experienced one. -->
 		</figure>
 		<figure style="margin: 20px;">
 			<img src="media/task4/after.png" alt="Description of Image 1" style="width: 100%; height: auto;">
+			<figcaption style="text-align: center;">After</figcaption>
+		</figure>
+	</div>
+
+	<h2>Task 5: Edge Split</h2>
+	<h3>Implementation of edge split operation and debugging journey</h3>
+	<p>
+		First, I declared the pointers to all related half edges (12), vertices (5), edges (4) and faces (4), including the new ones that are created due to an edge split. When declaring the new vertex, I also calculated its position by finding the midpoint of the two vertices of the edge that is being split.
+	</p>
+	<p>
+		Thereafter, I updated the halfedge pointer of all the vertices, edges, and faces, then update all halfedges using <i>setNeighbours()</i>, and returned the pointer to the new vertex created. Below shows the corresponding elements that are declared and created due to an edge split. 
+	</p>
+	<img src="./media/task5/diagram.jpeg"
+		style="width: 50%; height: auto; display: block; margin-left: auto; margin-right: auto;" />
+	<p>
+		Implementing this was relatively straightforward, especially after implementing edge flip, as the concept is very similar. I think one interesting thing to note is that for quite a while, I was declaring two edge pointers per edge, instead of one, which resulted in very confusing results, especially when I moved on to part 6. Thus, even though it worked seemingly well, when it came to implementing subdivisions, I realised that it was flawed and had to return to edit the code such that each edge only had one edge pointer declared. 
+	</p>
+	
+	<h3>Teapot before and after some splits</h3>
+	<div style="display: flex; justify-content: space-around; align-items: center;">
+
+		<figure style="margin: 20px;">
+			<img src="media/task5/beforesplit.png" alt="Description of Image 3" style="width: 100%; height: auto;">
+			<figcaption style="text-align: center;">Before</figcaption>
+		</figure>
+		<figure style="margin: 20px;">
+			<img src="media/task5/split.png" alt="Description of Image 1" style="width: 100%; height: auto;">
+			<figcaption style="text-align: center;">After</figcaption>
+		</figure>
+	</div>
+
+	<h3>Teapot before and after some splits and flips</h3>
+	<div style="display: flex; justify-content: space-around; align-items: center;">
+
+		<figure style="margin: 20px;">
+			<img src="media/task5/beforesplit.png" alt="Description of Image 3" style="width: 100%; height: auto;">
+			<figcaption style="text-align: center;">Before</figcaption>
+		</figure>
+		<figure style="margin: 20px;">
+			<img src="media/task5/splitnflip.png" alt="Description of Image 1" style="width: 100%; height: auto;">
 			<figcaption style="text-align: center;">After</figcaption>
 		</figure>
 	</div>
