@@ -16,7 +16,7 @@
 		Overview
 	</h2>
 	<p>
-
+		In this assignment, I have learnt the basics of how to implement and manipulate curves and meshes, which includes using variations of subdivision such as de Casteljau subdivision and loop subdivision. I think the most interesting part of this assignment is learning and understanding the simplicity of how subdivision works. Seemingly complex operations like 2d subdivision and loop subdivisions are basically just utilising simple functions such as edge split and 1d subdivisions as basic building blocks, and simply tweaking the order or method of implementations to get increasingly complex results. 
 	</p>
 
 	<h2>Task 1: Bezier Curves with 1D de Casteljau Subdivision (10 pts)</h2>
@@ -270,11 +270,7 @@ Write about your eventful debugging journey, if you have experienced one. -->
 		averaging process involved in loop subdivision.
 	</p>
 
-	<h3>dae/cube.dae</h3>
-	<h4>
-		Can you pre-process the cube with edge flips and splits so that the cube subdivides symmetrically? Document
-		these effects and explain why they occur. Also explain how your pre-processing helps alleviate the effects.
-	</h4>
+	<h3>Preprocessing dae/cube.dae</h3>
 	<p>
 		Given that the initial mesh of the cube has only two triangles on each face, the lack of symmetry in the mesh is expounded as the mesh subdivides. Thus, to ensure that the cube subdivides symmetrically, we would have to preprocess the mesh such that each face is symmetric. To do so, I split the slanted edge on each face such that there are 4 triangles on each face instead of 2, lending each face a symmetry that then translates to symmetric subdivision. 
 	</p>
