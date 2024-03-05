@@ -41,15 +41,16 @@
 
 <h1 align="middle">CS 184: Computer Graphics and Imaging, Spring 2023</h1>
 <h1 align="middle">Project 3-1: Path Tracer</h1>
-<h2 align="middle">YOUR NAME(S)</h2>
+<h2 align="middle">Ong Jing Xuan</h2>
 
 <!-- Add Website URL -->
-<h2 align="middle">Website URL: <a href="TODO">TODO</a></h2>
+<h2 align="middle">Website URL: <a href="https://cal-cs184-student.github.io/hw-webpages-sp24-ongjx16/hw3/index.html"
+	target="_blank">https://cal-cs184-student.github.io/hw-webpages-sp24-ongjx16/hw3/index.html</a>
 
 <br><br>
 
 
-<div align="center">
+<!-- <div align="center">
   <table style="width:100%">
       <tr>
           <td align="middle">
@@ -64,7 +65,7 @@
 <p align="middle"><pre align="middle">a^2 + b^2 = c^2</pre></p>
 <p>or, alternatively, you can include an SVG image of a LaTex formula.</p>
 
-<div>
+<div> -->
 
 <h2 align="middle">Overview</h2>
 <p>
@@ -85,16 +86,22 @@ Show images with normal shading for a few small .dae files. -->
     First, to implement ray generation, we had to take in image coordinates as input and output its coordinates in the world space. This then allows us to with the image pixels in the same world space as the camera, which then allows us to draw rays from the camera to the pixels. This is first done by taking the normalised image coordinates and superimposing them onto the camera sensor plane, making sure to align (0.5,0.5) in the image space to (0,0,-1) in the camera space. Then, using the provided camera-to-world rotation matrix, I then obtained the direction vector of the ray in the world space. 
 	<!-- then talk about part 2:  function takes pixel coordinates (x,y) as input and updates the corresponding pixel in sampleBuffer with a Vector3D representing the integral of radiance over this pixel. This integral will be estimated by averaging ns_aa samples. -->
 </p>
+<p>
+	Then, we sample each pixel to get the radiance of each pixel. This is done by sampling <i>ns_aa</i> number of samples per pixel, then getting the estimated scene radiance along each sample ray, and finally using the Monte Carlo integration method to get the final value of each pixel. 
+</p>
 
 <h4>Primitive Intersection</h4>
 <h5>Triangle Intersection</h5>
-<p></p>
-<h5>Sphere Intersection</h5>
-<p></p>
-<br>
-
 <p>
-    YOUR RESPONSE GOES HERE
+	To test for triangle intersection, I first implemented <i>has_intersection()</i> by using the Möller–Trumbor Algorithm, which is a fast ray-triangle intersection algorithm, and obtaining value of t. Then, I checked if the resultant point is within the boundaries of the triangle. If it isn't, return false. Then, if t was within the boundaries of min_t and max_t, I returned true and updated r.max_t. Else, return false.
+</p>
+<p>
+	To implement <i>intersect()</i>, I then checked if has_intersection() is true (if false return false), and obtained the new t by using the r.max_t value. Using the areas of the triangle subdivided by the intersection point, I obtained the alpha, beta and gamma constants in the barycentric coordinates equation, and found the surfance normal at the intersection by interpolating n1, n2 and n3. Then, I populated the isect structure and returned true.
+</p>
+
+<h5>Sphere Intersection</h5>
+<p>
+	The sphere intersection algorithm is very similar to the triangle intersection one, just that a different algorithm is used to calculate t. Given that there is a discriminant involved in the equation, we have to check if the discriminant is more than or equal zero. If it isn't, return false. We also have to make sure that one of the two results are at least in min_t and max_t for the <i>test()</i> helper function to return true. In both <i>has_intersection()</i> and <i>intersection()</i>, I updated r.max_t with the smallest valid t between t1 and t2. In <i>intersection()</i>, I calculated the surface normal by normalising the vector pointing from the sphere center to the intersection point. Lastly, I updated the intersection i structure.
 </p>
 <br>
 
@@ -106,22 +113,16 @@ Show images with normal shading for a few small .dae files. -->
   <table style="width:100%">
     <tr align="center">
       <td>
-        <img src="images/your_file.png" align="middle" width="400px"/>
-        <figcaption>example1.dae</figcaption>
+        <img src="./media/part1/CBbunny.png" align="middle" width="400px"/>
+        <figcaption>CBbunny.dae</figcaption>
       </td>
       <td>
-        <img src="images/your_file.png" align="middle" width="400px"/>
-        <figcaption>example2.dae</figcaption>
+        <img src="./media/part1/CBspheres.png" align="middle" width="400px"/>
+        <figcaption>CBspheres.dae</figcaption>
       </td>
-    </tr>
-    <tr align="center">
-      <td>
-        <img src="images/your_file.png" align="middle" width="400px"/>
-        <figcaption>example3.dae</figcaption>
-      </td>
-      <td>
-        <img src="images/your_file.png" align="middle" width="400px"/>
-        <figcaption>example4.dae</figcaption>
+	  <td>
+        <img src="./media/part1/teapot.png" align="middle" width="400px"/>
+        <figcaption>teapot.dae</figcaption>
       </td>
     </tr>
   </table>
