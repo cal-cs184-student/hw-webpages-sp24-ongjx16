@@ -139,7 +139,14 @@ Compare rendering times on a few scenes with moderately complex geometries with 
   Walk through your BVH construction algorithm. Explain the heuristic you chose for picking the splitting point.
 </h3>
 <p>
-    YOUR RESPONSE GOES HERE
+    For the BVH construction algorithm, I first computed the mean centroid location of all the primitives. Then for each axis, I calculated the cost of splitting the box at the calculated mean location, by summing the resultant density of each resulant bounding box (number of primitives/surface area of resultant bounding box) after the split. This method for estimating the cost of splitting at that axis means that the split with the smallest cost results in bounding boxes that are denser, with a much more likely chance of intersecting the primitive if a ray were to intersect the bounding box, thereby effectively reducing a larger number of primitives to consider when performing ray-primitive intersection. The reason for using the mean position of all the primitives, instead of using the median position, is because it is much easier to sum all the centroid positions, rather than reorder all the primitives based on their location to find the median. 
+
+</p>
+<p>
+	After finding the optimal axis to split the box, I then iterated through all the primitives to figure out if they were on the left or right side of the cut. Then, the primitives in the primitive vector were then rearranged (using the two pointer sorting method) such that all primitives in the left bounding box lies before the primitives in the right bounding box. Then, I updated the left and right pointers of the node by calling <i>construct_bvh</i>, with the two halves of the primitive vector. 
+</p>
+<p>
+	Additionally, if the node in question is a leaf node, I made sure to leave its right and left pointer as NULL, and populated its start and end pointer with the start and end pointer inputs.
 </p>
 
 <h3>
@@ -170,10 +177,7 @@ Compare rendering times on a few scenes with moderately complex geometries with 
   Compare rendering times on a few scenes with moderately complex geometries with and without BVH acceleration. Present your results in a one-paragraph analysis.
 </h3>
 <p>
-    cow.png: 0.1534s w bvh (../dae/meshedit/cow.dae)
-	8.9602s without
-	beast.png: 0.2100s w bvh (../dae/meshedit/beast.dae)
-	105.1718s without
+	Upon rendering the <i>/dae/meshedit/cow.dae</i> file, which sped up from 8.9602s to 0.1534s with BVH acceleration, and the  <i>/dae/meshedit/beast.dae</i> file, which sped up from 105.1718s to 0.2100s with BVH acceleration, it is obvious that BVH acceleration has incredible results in speeding up the rendering process of complex geometries. By using BVH to group primitives into their various bounding boxes, the effective elimination of large numbers of primitives to perform ray-primitive intersection tests on has helped to optimise the runtime tremendously.
 </p>
 <br>
 
