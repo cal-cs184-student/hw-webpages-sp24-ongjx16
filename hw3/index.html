@@ -244,16 +244,15 @@ Compare the results between uniform hemisphere sampling and lighting sampling in
 		<p>
 			To implement direct lighting function, we need to calculate how much light is reflected back into the camera
 			at the intersection point, by estimating how much light arrives at the intersection point. This is done by
-			uniformly sampling incoming ray directions in the hemisphere. For each sample, I first called
-			<i>isect.bsdf->sample_f</i>. This assigns a pdf and a randomly sampled point wj, as well as provides the
-			bsdf due to the sampled point. The cosine theta variable is calculated using the dot product of the unit
+			uniformly sampling incoming ray directions in the hemisphere. For each sample, I first called hemisphereSampler->get_sample() to get a sample point wj on the hemisphere. Then, I called 
+			<i>isect.bsdf->f</i>, which returns the bsdf at the intersection due to the sampled point. The cosine theta variable is calculated using the dot product of the unit
 			normal (z-axis) and the randomly sampled point. The sampled incoming ray is created by using the
 			intersection point as the origin, and the sampled point as the direction vector (multiplied by o2w to
 			convert into a world vector). Then, if this sampled ray intersects with a primitive, it means that it
 			intersects with a light source, and should be added to the total sum of reflected light. To calculate the
 			amount of light to be added, the monte carlo estimator formula is used, where light to be added = bsdf*
 			emitted light at intersection with light source * cos theta. After iterating through num_samples, the total
-			sum is divided by num_samples, and returned as L_out.
+			sum is divided by num_samples, and multiplied by 2*PI (solid angles in hemisphere), then returned as L_out.
 		</p>
 		<h4>
 			Light Sampling
