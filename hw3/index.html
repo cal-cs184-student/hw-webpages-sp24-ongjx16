@@ -368,7 +368,13 @@ You will probably want to use the instructional machines for the above renders i
 			Walk through your implementation of the indirect lighting function.
 		</h3>
 		<p>
-			YOUR RESPONSE GOES HERE
+			To implement the indirect lighting function, I first initalised the ray depth to max_ray_depth, so that the recursion would stop at after <i>max_ray_depth</i> times. For each recursion step, I first defined L_out as the one_bounce_radiance emitted from the intersection at hand. Then, to calculate the subsequent bounce, I first sampled a direction wi using <i>isect.bsdf->sample_f()</i>, which also defines the pdf for the distribution. Then, the new ray to consider is created by using the sample direction wi as the ray direction, and the hit point hit_p as the origin. The depth of the new ray is also set to r.depth -1, so as to account for the increase in bounces. If this ray intersects with the primitive, we then call the function on the new ray and the new intersection parameters, and use the monte carlo estimator equation to calculate the addition to L_out. 
+		</p>
+		<p>
+			To account for cases where isAccumBounce = false, instead of accumulating the radiance from all the bounces, L_out is reset to the monte carlo sum of the next bounce, such that when the program terminates, only the radiance from the last bounce is returned. Furthermore, if the new sampled ray does not intersect the primitive, black [Vector3D(0,0,0)] is returned. 
+		</p>
+		<p>
+			To implement part 3 (russian roulette), the calculation of subsequent rays is only considered if (coin_flip(rr)) returns true. rr is defined as 0.65 (1-0.35), since the spec recommended a termination probablity of 0.3-0.4. Else, the function returns without further recursion. 
 		</p>
 		<br>
 
@@ -414,13 +420,98 @@ You will probably want to use the instructional machines for the above renders i
 		</div>
 		<br>
 		<p>
+			COmparing the 2nd and 3rd bounce of light we can see that the 3rd bounce is darker, 
+		</p>
+		<br>
+
+		<h3>
+			For CBbunny.dae, render the mth bounce of light with max_ray_depth set to 0, 1, 2, 3, 4, and 5 (the -m flag), and isAccumBounces=false. Explain in your writeup what you see for the 2nd and 3rd bounce of light, and how it contributes to the quality of the rendered image compared to rasterization. Use 1024 samples per pixel.
+		</h3>
+		<!-- Example of including multiple figures -->
+		<div align="middle">
+			<table style="width:100%">
+				<tr align="center">
+					<td>
+						<img src="media/part4/non-accum/bunny00.png" align="middle" width="400px" />
+						<figcaption>max_ray_depth = 0 (CBbunny.dae)</figcaption>
+					</td>
+					<td>
+						<img src="media/part4/non-accum/bunny01.png" align="middle" width="400px" />
+						<figcaption>max_ray_depth = 1 (CBbunny.dae)</figcaption>
+					</td>
+					<td>
+						<img src="media/part4/non-accum/bunny02.png" align="middle" width="400px" />
+						<figcaption>max_ray_depth = 2 (CBbunny.dae)</figcaption>
+					</td>
+				</tr>
+				<tr align="center">
+					
+					<td>
+						<img src="media/part4/non-accum/bunny03.png" align="middle" width="400px" />
+						<figcaption>max_ray_depth = 3 (CBbunny.dae)</figcaption>
+					</td>
+					<td>
+						<img src="media/part4/non-accum/bunny04.png" align="middle" width="400px" />
+						<figcaption>max_ray_depth = 4 (CBbunny.dae)</figcaption>
+					</td>
+					<td>
+						<img src="media/part4/non-accum/bunny05.png" align="middle" width="400px" />
+						<figcaption>max_ray_depth = 5 (CBbunny.dae)</figcaption>
+					</td>
+				</tr>
+			</table>
+		</div>
+		<br>
+		<p>
 			YOUR EXPLANATION GOES HERE
 		</p>
 		<br>
 
 		<h3>
-			For CBbunny.dae, compare rendered views with max_ray_depth set to 0, 1, 2, 3, and 100 (the -m flag). Use
-			1024 samples per pixel.
+			For CBbunny.dae, compare rendered views with max_ray_depth set to 0, 1, 2, 3, 4, and 5(the -m flag). Use 1024 samples per pixel.
+		</h3>
+		<!-- Example of including multiple figures -->
+		<div align="middle">
+			<table style="width:100%">
+				<tr align="center">
+					<td>
+						<img src="media/part4/accum/bunny10.png" align="middle" width="400px" />
+						<figcaption>max_ray_depth = 0 (CBbunny.dae)</figcaption>
+					</td>
+					<td>
+						<img src="media/part4/accum/bunny11.png" align="middle" width="400px" />
+						<figcaption>max_ray_depth = 1 (CBbunny.dae)</figcaption>
+					</td>
+					<td>
+						<img src="media/part4/accum/bunny12.png" align="middle" width="400px" />
+						<figcaption>max_ray_depth = 2 (CBbunny.dae)</figcaption>
+					</td>
+				</tr>
+				<tr align="center">
+					
+					<td>
+						<img src="media/part4/accum/bunny13.png" align="middle" width="400px" />
+						<figcaption>max_ray_depth = 3 (CBbunny.dae)</figcaption>
+					</td>
+					<td>
+						<img src="media/part4/accum/bunny14.png" align="middle" width="400px" />
+						<figcaption>max_ray_depth = 4 (CBbunny.dae)</figcaption>
+					</td>
+					<td>
+						<img src="media/part4/accum/bunny15.png" align="middle" width="400px" />
+						<figcaption>max_ray_depth = 5 (CBbunny.dae)</figcaption>
+					</td>
+				</tr>
+			</table>
+		</div>
+		<br>
+		<p>
+			YOUR EXPLANATION GOES HERE
+		</p>
+		<br>
+
+		<h3>
+			For CBbunny.dae, output the Russian Roulette rendering with max_ray_depth set to 0, 1, 2, 3, 4, and 100(the -m flag). Use 1024 samples per pixel.
 		</h3>
 		<!-- Example of including multiple figures -->
 		<div align="middle">
