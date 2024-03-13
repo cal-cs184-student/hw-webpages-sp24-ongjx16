@@ -57,7 +57,13 @@
 
 		<h2 align="middle">Overview</h2>
 		<p>
-			In this project, we learn to render scenes by first generating rays and the algorithms to detect primitive intersection. We then optimise this process by using bounding volume hierachy, which significantly increases the efficiency of calculating ray-primitive intersections by eliminating unecessary intersections to consider. Thereafter, the scene is rendered using direct lighting and indirect lighting, which uses previously learnt concepts like monte carlo estimator, and new concepts like using importance sampling and considering a material's brdf. Lastly, we implement adaptive sampling to dynamically optimise sampling rates at different parts of the scenes to increase rendering efficiency.
+			In this project, we learn to render scenes by first generating rays and the algorithms to detect primitive
+			intersection. We then optimise this process by using bounding volume hierachy, which significantly increases
+			the efficiency of calculating ray-primitive intersections by eliminating unecessary intersections to
+			consider. Thereafter, the scene is rendered using direct lighting and indirect lighting, which uses
+			previously learnt concepts like monte carlo estimator, and new concepts like using importance sampling and
+			considering a material's brdf. Lastly, we implement adaptive sampling to dynamically optimise sampling rates
+			at different parts of the scenes to increase rendering efficiency.
 		</p>
 		<br>
 
@@ -129,6 +135,10 @@ Show images with normal shading for a few small .dae files. -->
 						<img src="./media/part1/CBspheres.png" align="middle" width="400px" />
 						<figcaption>CBspheres.dae</figcaption>
 					</td>
+					
+				</tr>
+				<tr align="center">
+					
 					<td>
 						<img src="./media/part1/teapot.png" align="middle" width="400px" />
 						<figcaption>teapot.dae</figcaption>
@@ -188,6 +198,10 @@ Compare rendering times on a few scenes with moderately complex geometries with 
 						<img src="media/part2/peter.png" align="middle" width="400px" />
 						<figcaption>peter.dae</figcaption>
 					</td>
+
+				</tr>
+				<tr align="center">
+
 					<td>
 						<img src="media/part2/CBdragon.png" align="middle" width="400px" />
 						<figcaption>CBdragon.dae</figcaption>
@@ -226,8 +240,10 @@ Compare the results between uniform hemisphere sampling and lighting sampling in
 		<p>
 			To implement direct lighting function, we need to calculate how much light is reflected back into the camera
 			at the intersection point, by estimating how much light arrives at the intersection point. This is done by
-			uniformly sampling incoming ray directions in the hemisphere. For each sample, I first called hemisphereSampler->get_sample() to get a sample point wj on the hemisphere. Then, I called 
-			<i>isect.bsdf->f</i>, which returns the bsdf at the intersection due to the sampled point. The cosine theta variable is calculated using the dot product of the unit
+			uniformly sampling incoming ray directions in the hemisphere. For each sample, I first called
+			hemisphereSampler->get_sample() to get a sample point wj on the hemisphere. Then, I called
+			<i>isect.bsdf->f</i>, which returns the bsdf at the intersection due to the sampled point. The cosine theta
+			variable is calculated using the dot product of the unit
 			normal (z-axis) and the randomly sampled point. The sampled incoming ray is created by using the
 			intersection point as the origin, and the sampled point as the direction vector (multiplied by o2w to
 			convert into a world vector). Then, if this sampled ray intersects with a primitive, it means that it
@@ -259,7 +275,7 @@ Compare the results between uniform hemisphere sampling and lighting sampling in
 					<th>
 						<b>Uniform Hemisphere Sampling</b>
 					</th>
-					
+
 				</tr>
 				<br>
 				<tr align="center">
@@ -277,7 +293,7 @@ Compare the results between uniform hemisphere sampling and lighting sampling in
 					<th>
 						<b>Light Sampling</b>
 					</th>
-					
+
 				</tr>
 				<tr align="center">
 					<td>
@@ -325,7 +341,10 @@ Compare the results between uniform hemisphere sampling and lighting sampling in
 			</table>
 		</div>
 		<p>
-			By comparing the soft shadows cast by the spheres, we can tell that as the number of light rays sampled increases, the shadows become less noisy. This is because as the number of light samples increases, the actual distribution of light in the scene is better approximated, since there is a greater chance that a more comprehensive range of possible light and surface interaction is accounted for. 
+			By comparing the soft shadows cast by the spheres, we can tell that as the number of light rays sampled
+			increases, the shadows become less noisy. This is because as the number of light samples increases, the
+			actual distribution of light in the scene is better approximated, since there is a greater chance that a
+			more comprehensive range of possible light and surface interaction is accounted for.
 		</p>
 		<br>
 
@@ -333,7 +352,11 @@ Compare the results between uniform hemisphere sampling and lighting sampling in
 			Compare the results between uniform hemisphere sampling and lighting sampling in a one-paragraph analysis.
 		</h3>
 		<p>
-			By comparing the resultant renders, we can see that lighting sampling often generates brighter and less noisy images as compared to uniform hemisphere sampling. This is because light sampling samples rays that are much more likely to contribute siginificantly to the final image render (given that they originate from light sources), as compared to randomly sampled rays in all directions of the hemisphere. Importance sampling in the form of light sampling thus results in much higher quality renders. 
+			By comparing the resultant renders, we can see that lighting sampling often generates brighter and less
+			noisy images as compared to uniform hemisphere sampling. This is because light sampling samples rays that
+			are much more likely to contribute siginificantly to the final image render (given that they originate from
+			light sources), as compared to randomly sampled rays in all directions of the hemisphere. Importance
+			sampling in the form of light sampling thus results in much higher quality renders.
 		</p>
 		<br>
 
@@ -350,13 +373,26 @@ You will probably want to use the instructional machines for the above renders i
 			Walk through your implementation of the indirect lighting function.
 		</h3>
 		<p>
-			To implement the indirect lighting function, I first initalised the ray depth to max_ray_depth, so that the recursion would stop at after <i>max_ray_depth</i> times. For each recursion step, I first defined L_out as the one_bounce_radiance emitted from the intersection at hand. Then, to calculate the subsequent bounce, I first sampled a direction wi using <i>isect.bsdf->sample_f()</i>, which also defines the pdf for the distribution. Then, the new ray to consider is created by using the sample direction wi as the ray direction, and the hit point hit_p as the origin. The depth of the new ray is also set to r.depth -1, so as to account for the increase in bounces. If this ray intersects with the primitive, we then call the function on the new ray and the new intersection parameters, and use the monte carlo estimator equation to calculate the addition to L_out. 
+			To implement the indirect lighting function, I first initalised the ray depth to max_ray_depth, so that the
+			recursion would stop at after <i>max_ray_depth</i> times. For each recursion step, I first defined L_out as
+			the one_bounce_radiance emitted from the intersection at hand. Then, to calculate the subsequent bounce, I
+			first sampled a direction wi using <i>isect.bsdf->sample_f()</i>, which also defines the pdf for the
+			distribution. Then, the new ray to consider is created by using the sample direction wi as the ray
+			direction, and the hit point hit_p as the origin. The depth of the new ray is also set to r.depth -1, so as
+			to account for the increase in bounces. If this ray intersects with the primitive, we then call the function
+			on the new ray and the new intersection parameters, and use the monte carlo estimator equation to calculate
+			the addition to L_out.
 		</p>
 		<p>
-			To account for cases where isAccumBounce = false, instead of accumulating the radiance from all the bounces, L_out is reset to the monte carlo sum of the next bounce, such that when the program terminates, only the radiance from the last bounce is returned. Furthermore, if the new sampled ray does not intersect the primitive, black [Vector3D(0,0,0)] is returned. 
+			To account for cases where isAccumBounce = false, instead of accumulating the radiance from all the bounces,
+			L_out is reset to the monte carlo sum of the next bounce, such that when the program terminates, only the
+			radiance from the last bounce is returned. Furthermore, if the new sampled ray does not intersect the
+			primitive, black [Vector3D(0,0,0)] is returned.
 		</p>
 		<p>
-			To implement part 3 (russian roulette), the calculation of subsequent rays is only considered if (coin_flip(rr)) returns true. rr is defined as 0.65 (1-0.35), since the spec recommended a termination probablity of 0.3-0.4. Else, the function returns without further recursion. 
+			To implement part 3 (russian roulette), the calculation of subsequent rays is only considered if
+			(coin_flip(rr)) returns true. rr is defined as 0.65 (1-0.35), since the spec recommended a termination
+			probablity of 0.3-0.4. Else, the function returns without further recursion.
 		</p>
 		<br>
 
@@ -402,12 +438,22 @@ You will probably want to use the instructional machines for the above renders i
 		</div>
 		<br>
 		<p>
-			Based on observation, one can tell that the image with only direct illumination has strong highlights on the top of the ball and on the walls, though the balls itself is void of colour. Conversely, with only indirect illumination, the highlights are in places where the direct light does not hit, and the shadows are alot softer, and the balls itself are coloured. This is because in indirect illumination, the colours from the surrounding walls are reflected onto the balls, and the intensity of these reflective rays decrease as the number of bounces increase. For direct illumination, the first ray of light is not able to hit places covered by the balls or behind the light (the ceiling), as the light is not able to bounce on other surfaces to reach these parts.
+			Based on observation, one can tell that the image with only direct illumination has strong highlights on the
+			top of the ball and on the walls, though the balls itself is void of colour. Conversely, with only indirect
+			illumination, the highlights are in places where the direct light does not hit, and the shadows are alot
+			softer, and the balls itself are coloured. This is because in indirect illumination, the colours from the
+			surrounding walls are reflected onto the balls, and the intensity of these reflective rays decrease as the
+			number of bounces increase. For direct illumination, the first ray of light is not able to hit places
+			covered by the balls or behind the light (the ceiling), as the light is not able to bounce on other surfaces
+			to reach these parts.
 		</p>
 		<br>
 
 		<h3>
-			For CBbunny.dae, render the mth bounce of light with max_ray_depth set to 0, 1, 2, 3, 4, and 5 (the -m flag), and isAccumBounces=false. Explain in your writeup what you see for the 2nd and 3rd bounce of light, and how it contributes to the quality of the rendered image compared to rasterization. Use 1024 samples per pixel.
+			For CBbunny.dae, render the mth bounce of light with max_ray_depth set to 0, 1, 2, 3, 4, and 5 (the -m
+			flag), and isAccumBounces=false. Explain in your writeup what you see for the 2nd and 3rd bounce of light,
+			and how it contributes to the quality of the rendered image compared to rasterization. Use 1024 samples per
+			pixel.
 		</h3>
 		<!-- Example of including multiple figures -->
 		<div align="middle">
@@ -421,17 +467,21 @@ You will probably want to use the instructional machines for the above renders i
 						<img src="media/part4/non-accum/bunny01.png" align="middle" width="400px" />
 						<figcaption>max_ray_depth = 1 (CBbunny.dae)</figcaption>
 					</td>
+					
+				</tr>
+				<tr align="center">
 					<td>
 						<img src="media/part4/non-accum/bunny02.png" align="middle" width="400px" />
 						<figcaption>max_ray_depth = 2 (CBbunny.dae)</figcaption>
 					</td>
-				</tr>
-				<tr align="center">
-					
 					<td>
 						<img src="media/part4/non-accum/bunny03.png" align="middle" width="400px" />
 						<figcaption>max_ray_depth = 3 (CBbunny.dae)</figcaption>
 					</td>
+				</tr>
+				<tr align="center">
+
+					
 					<td>
 						<img src="media/part4/non-accum/bunny04.png" align="middle" width="400px" />
 						<figcaption>max_ray_depth = 4 (CBbunny.dae)</figcaption>
@@ -445,12 +495,20 @@ You will probably want to use the instructional machines for the above renders i
 		</div>
 		<br>
 		<p>
-			Comparing the 2nd and 3rd bounce of light, we can see that the 2nd bounce of light is brighter than the 3rd, and the spots that are brighter in the 2nd bounce are mostly the underside and front of the rabbit, while for the 3rd bounce the area behind the bunny is lighter than the bunny itself. This is probably because there is a higher proportion of light bouncing off behind the bunny after more bounces, whereas the front of the bunny is likely to be rendered more significantly in the first few bounces. By adding these bounces of light, the quality of the resultant image is greater as the light rendered is softer, as it takes into account light reflected upon all objects in the room, as opposed to just considering direct light that is shone on the objects.
+			Comparing the 2nd and 3rd bounce of light, we can see that the 2nd bounce of light is brighter than the 3rd,
+			and the spots that are brighter in the 2nd bounce are mostly the underside and front of the rabbit, while
+			for the 3rd bounce the area behind the bunny is lighter than the bunny itself. This is probably because
+			there is a higher proportion of light bouncing off behind the bunny after more bounces, whereas the front of
+			the bunny is likely to be rendered more significantly in the first few bounces. By adding these bounces of
+			light, the quality of the resultant image is greater as the light rendered is softer, as it takes into
+			account light reflected upon all objects in the room, as opposed to just considering direct light that is
+			shone on the objects.
 		</p>
 		<br>
 
 		<h3>
-			For CBbunny.dae, compare rendered views with max_ray_depth set to 0, 1, 2, 3, 4, and 5(the -m flag). Use 1024 samples per pixel.
+			For CBbunny.dae, compare rendered views with max_ray_depth set to 0, 1, 2, 3, 4, and 5(the -m flag). Use
+			1024 samples per pixel.
 		</h3>
 		<!-- Example of including multiple figures -->
 		<div align="middle">
@@ -464,17 +522,21 @@ You will probably want to use the instructional machines for the above renders i
 						<img src="media/part4/accum/bunny11.png" align="middle" width="400px" />
 						<figcaption>max_ray_depth = 1 (CBbunny.dae)</figcaption>
 					</td>
+					
+				</tr>
+				<tr align="center">
 					<td>
 						<img src="media/part4/accum/bunny12.png" align="middle" width="400px" />
 						<figcaption>max_ray_depth = 2 (CBbunny.dae)</figcaption>
 					</td>
-				</tr>
-				<tr align="center">
-					
 					<td>
 						<img src="media/part4/accum/bunny13.png" align="middle" width="400px" />
 						<figcaption>max_ray_depth = 3 (CBbunny.dae)</figcaption>
 					</td>
+				</tr>
+				<tr align="center">
+
+					
 					<td>
 						<img src="media/part4/accum/bunny14.png" align="middle" width="400px" />
 						<figcaption>max_ray_depth = 4 (CBbunny.dae)</figcaption>
@@ -488,12 +550,17 @@ You will probably want to use the instructional machines for the above renders i
 		</div>
 		<br>
 		<p>
-			By summing up all the radiance due to each bounce of light, we can see that the scene not only gets increasingly brighter, but surfaces that are hidden from the light source above gets increasingly brighter. The shadows also become less harsh, though the difference in images becomes decreasingly obvious as the number of bounces increases. This is because the power of the light reflected in the later bounces decreases and contribute less and less significantly to the scene.
+			By summing up all the radiance due to each bounce of light, we can see that the scene not only gets
+			increasingly brighter, but surfaces that are hidden from the light source above gets increasingly brighter.
+			The shadows also become less harsh, though the difference in images becomes decreasingly obvious as the
+			number of bounces increases. This is because the power of the light reflected in the later bounces decreases
+			and contribute less and less significantly to the scene.
 		</p>
 		<br>
 
 		<h3>
-			For CBbunny.dae, output the Russian Roulette rendering with max_ray_depth set to 0, 1, 2, 3, 4, and 100(the -m flag). Use 1024 samples per pixel.
+			For CBbunny.dae, output the Russian Roulette rendering with max_ray_depth set to 0, 1, 2, 3, 4, and 100(the
+			-m flag). Use 1024 samples per pixel.
 		</h3>
 		<!-- Example of including multiple figures -->
 		<div align="middle">
@@ -507,17 +574,21 @@ You will probably want to use the instructional machines for the above renders i
 						<img src="media/part4/rr/bunnyrr1.png" align="middle" width="400px" />
 						<figcaption>max_ray_depth = 1 (CBbunny.dae)</figcaption>
 					</td>
+					
+				</tr>
+				<tr align="center">
 					<td>
 						<img src="media/part4/rr/bunnyrr2.png" align="middle" width="400px" />
 						<figcaption>max_ray_depth = 2 (CBbunny.dae)</figcaption>
 					</td>
-				</tr>
-				<tr align="center">
-					
 					<td>
 						<img src="media/part4/rr/bunnyrr3.png" align="middle" width="400px" />
 						<figcaption>max_ray_depth = 3 (CBbunny.dae)</figcaption>
 					</td>
+				</tr>
+				<tr align="center">
+
+					
 					<td>
 						<img src="media/part4/rr/bunnyrr4.png" align="middle" width="400px" />
 						<figcaption>max_ray_depth = 4 (CBbunny.dae)</figcaption>
@@ -527,7 +598,7 @@ You will probably want to use the instructional machines for the above renders i
 						<figcaption>max_ray_depth = 100 (CBbunny.dae)</figcaption>
 					</td>
 				</tr>
-				
+
 			</table>
 		</div>
 		<br>
@@ -579,7 +650,11 @@ You will probably want to use the instructional machines for the above renders i
 		</div>
 		<br>
 		<p>
-			As the number of samples increases, the rendered image becomes less and less noisy. This is because as more samples are used, there is a higher percentage of the scene being considered when calculating the resultant radiance for each pixel, which results in a values closer to the expected value. A low sampling rate means there is a higher chance that light paths chosen due to sampling don't accurately represent how the light actually interacts with the scene, which manifests in the noise seen in the rendered results.
+			As the number of samples increases, the rendered image becomes less and less noisy. This is because as more
+			samples are used, there is a higher percentage of the scene being considered when calculating the resultant
+			radiance for each pixel, which results in a values closer to the expected value. A low sampling rate means
+			there is a higher chance that light paths chosen due to sampling don't accurately represent how the light
+			actually interacts with the scene, which manifests in the noise seen in the rendered results.
 		</p>
 		<br>
 
@@ -592,45 +667,56 @@ Pick one scene and render it with at least 2048 samples per pixel. Show a good s
 			Explain adaptive sampling. Walk through your implementation of the adaptive sampling.
 		</h3>
 		<p>
-			Adaptive sampling is a technique used to reduce unecessarily high sampling rates for certain parts of the scene, by considering how much the pixel has converges. This is because uniform sampling results in all pixels being sampled at the same rate regardless of how complicated or simple that part of the scene is, which results in unnecessary calculations. 
+			Adaptive sampling is a technique used to reduce unecessarily high sampling rates for certain parts of the
+			scene, by considering how much the pixel has converges. This is because uniform sampling results in all
+			pixels being sampled at the same rate regardless of how complicated or simple that part of the scene is,
+			which results in unnecessary calculations.
 		</p>
 		<p>
-			To implement adaptive sampling, I first initialised two double variables, s1 and s1. As I iterated through ns_aa samples, the illuminance of the calculated for each sample is added to this sum. Then, for every samplesPerBatch samples, I calcualate the current mean and variance of the samples, and then use the given algorithm to calculate I. If I <= maxTolerance * mean, I then break out of the for loop and stop the sampling iteration. This means that the pixel has converged enough and does not require additionall sampling to get rid of noise in the scene. 
-		</p>
-		<br>
+			To implement adaptive sampling, I first initialised two double variables, s1 and s1. As I iterated through
+			ns_aa samples, the illuminance of the calculated for each sample is added to this sum. Then, for every
+			samplesPerBatch samples, I calcualate the current mean and variance of the samples, and then use the given
+			algorithm to calculate I. If I <= maxTolerance * mean, I then break out of the for loop and stop the
+				sampling iteration. This means that the pixel has converged enough and does not require additionall
+				sampling to get rid of noise in the scene. </p>
+				<br>
 
-		<h3>
-			Pick two scenes and render them with at least 2048 samples per pixel. Show a good sampling rate image with
-			clearly visible differences in sampling rate over various regions and pixels. Include both your sample rate
-			image, which shows your how your adaptive sampling changes depending on which part of the image you are
-			rendering, and your noise-free rendered result. Use 1 sample per light and at least 5 for max ray depth.
-		</h3>
-		<!-- Example of including multiple figures -->
-		<div align="middle">
-			<table style="width:100%">
-				<tr align="center">
-					<td>
-						<img src="media/part5/bench_Adaptive.png" align="middle" width="400px" />
-						<figcaption>Rendered image (bench.dae)</figcaption>
-					</td>
-					<td>
-						<img src="media/part5/bench_Adaptive_rate.png" align="middle" width="400px" />
-						<figcaption>Sample rate image (bench.dae)</figcaption>
-					</td>
-				</tr>
-				<tr align="center">
-					<td>
-						<img src="media/part5/spheres_Adaptive.png" align="middle" width="400px" />
-						<figcaption>Rendered image (CBspheres_lambertian.dae)</figcaption>
-					</td>
-					<td>
-						<img src="media/part5/spheres_Adaptive_rate.png" align="middle" width="400px" />
-						<figcaption>Sample rate image (CBspheres_lambertian.dae)</figcaption>
-					</td>
-				</tr>
-			</table>
-		</div>
-		<br>
+				<h3>
+					Pick two scenes and render them with at least 2048 samples per pixel. Show a good sampling rate
+					image with
+					clearly visible differences in sampling rate over various regions and pixels. Include both your
+					sample rate
+					image, which shows your how your adaptive sampling changes depending on which part of the image you
+					are
+					rendering, and your noise-free rendered result. Use 1 sample per light and at least 5 for max ray
+					depth.
+				</h3>
+				<!-- Example of including multiple figures -->
+				<div align="middle">
+					<table style="width:100%">
+						<tr align="center">
+							<td>
+								<img src="media/part5/bench_Adaptive.png" align="middle" width="400px" />
+								<figcaption>Rendered image (bench.dae)</figcaption>
+							</td>
+							<td>
+								<img src="media/part5/bench_Adaptive_rate.png" align="middle" width="400px" />
+								<figcaption>Sample rate image (bench.dae)</figcaption>
+							</td>
+						</tr>
+						<tr align="center">
+							<td>
+								<img src="media/part5/spheres_Adaptive.png" align="middle" width="400px" />
+								<figcaption>Rendered image (CBspheres_lambertian.dae)</figcaption>
+							</td>
+							<td>
+								<img src="media/part5/spheres_Adaptive_rate.png" align="middle" width="400px" />
+								<figcaption>Sample rate image (CBspheres_lambertian.dae)</figcaption>
+							</td>
+						</tr>
+					</table>
+				</div>
+				<br>
 
 
 </body>
