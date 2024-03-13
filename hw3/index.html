@@ -323,21 +323,21 @@ Compare the results between uniform hemisphere sampling and lighting sampling in
 				<tr align="center">
 					<td>
 						<img src="media/part3/variations/sphere_1lr.png" align="middle" width="200px" />
-						<figcaption>1 Light Ray (CBspheres.dae)</figcaption>
+						<figcaption>1 Light Ray (CBspheres_lambertian.dae)</figcaption>
 					</td>
 					<td>
 						<img src="media/part3/variations/sphere_4lr.png" align="middle" width="200px" />
-						<figcaption>4 Light Rays (CBspheres.dae)</figcaption>
+						<figcaption>4 Light Rays (CBspheres_lambertian.dae)</figcaption>
 					</td>
 				</tr>
 				<tr align="center">
 					<td>
 						<img src="media/part3/variations/sphere_16lr.png" align="middle" width="200px" />
-						<figcaption>16 Light Rays (CBspheres.dae)</figcaption>
+						<figcaption>16 Light Rays (CBspheres_lambertian.dae)</figcaption>
 					</td>
 					<td>
 						<img src="media/part3/variations/sphere_64lr.png" align="middle" width="200px" />
-						<figcaption>64 Light Rays (CBspheres.dae)</figcaption>
+						<figcaption>64 Light Rays (CBspheres_lambertian.dae)</figcaption>
 					</td>
 				</tr>
 			</table>
@@ -386,12 +386,12 @@ You will probably want to use the instructional machines for the above renders i
 			<table style="width:100%">
 				<tr align="center">
 					<td>
-						<img src="images/your_file.png" align="middle" width="400px" />
-						<figcaption>example1.dae</figcaption>
+						<img src="media/part4/global/spheresglobal.png" align="middle" width="400px" />
+						<figcaption>CBspheres_lambertian.dae</figcaption>
 					</td>
 					<td>
-						<img src="images/your_file.png" align="middle" width="400px" />
-						<figcaption>example2.dae</figcaption>
+						<img src="media/part4/global/spheresglobal.png" align="middle" width="400px" />
+						<figcaption>CBblob.dae</figcaption>
 					</td>
 				</tr>
 			</table>
@@ -408,19 +408,19 @@ You will probably want to use the instructional machines for the above renders i
 			<table style="width:100%">
 				<tr align="center">
 					<td>
-						<img src="images/your_file.png" align="middle" width="400px" />
-						<figcaption>Only direct illumination (example1.dae)</figcaption>
+						<img src="media/part4/directvsindirect/spheresdirect.png" align="middle" width="400px" />
+						<figcaption>Only direct illumination (CBspheres_lambertian.dae)</figcaption>
 					</td>
 					<td>
-						<img src="images/your_file.png" align="middle" width="400px" />
-						<figcaption>Only indirect illumination (example1.dae)</figcaption>
+						<img src="media/part4/directvsindirect/spheresindirect.png" align="middle" width="400px" />
+						<figcaption>Only indirect illumination (CBspheres_lambertian.dae)</figcaption>
 					</td>
 				</tr>
 			</table>
 		</div>
 		<br>
 		<p>
-			COmparing the 2nd and 3rd bounce of light we can see that the 3rd bounce is darker, 
+			Based on observation, one can tell that the image with only direct illumination has strong highlights on the top of the ball and on the walls, though the balls itself is void of colour. Conversely, with only indirect illumination, the highlights are in places where the direct light does not hit, and the shadows are alot softer, and the balls itself are coloured. This is because in indirect illumination, the colours from the surrounding walls are reflected onto the balls, and the intensity of these reflective rays decrease as the number of bounces increase. For direct illumination, the first ray of light is not able to hit places covered by the balls or behind the light (the ceiling), as the light is not able to bounce on other surfaces to reach these parts.
 		</p>
 		<br>
 
@@ -463,7 +463,7 @@ You will probably want to use the instructional machines for the above renders i
 		</div>
 		<br>
 		<p>
-			YOUR EXPLANATION GOES HERE
+			Comparing the 2nd and 3rd bounce of light, we can see that the 2nd bounce of light is brighter than the 3rd, and the spots that are brighter in the 2nd bounce are mostly the underside and front of the rabbit, while for the 3rd bounce the area behind the bunny is lighter than the bunny itself. This is probably because there is a higher proportion of light bouncing off behind the bunny after more bounces, whereas the front of the bunny is likely to be rendered more significantly in the first few bounces. By adding these bounces of light, the quality of the resultant image is greater as the light rendered is softer, as it takes into account light reflected upon all objects in the room, as opposed to just considering direct light that is shone on the objects.
 		</p>
 		<br>
 
@@ -506,7 +506,7 @@ You will probably want to use the instructional machines for the above renders i
 		</div>
 		<br>
 		<p>
-			YOUR EXPLANATION GOES HERE
+			By summing up all the radiance due to each bounce of light, we can see that the scene not only gets increasingly brighter, but surfaces that are hidden from the light source above gets increasingly brighter. The shadows also become less harsh, though the difference in images becomes decreasingly obvious as the number of bounces increases. This is because the power of the light reflected in the later bounces decreases and contribute less and less significantly to the scene.
 		</p>
 		<br>
 
@@ -518,36 +518,36 @@ You will probably want to use the instructional machines for the above renders i
 			<table style="width:100%">
 				<tr align="center">
 					<td>
-						<img src="images/your_file.png" align="middle" width="400px" />
+						<img src="media/part4/rr/bunnyrr0.png" align="middle" width="400px" />
 						<figcaption>max_ray_depth = 0 (CBbunny.dae)</figcaption>
 					</td>
 					<td>
-						<img src="images/your_file.png" align="middle" width="400px" />
+						<img src="media/part4/rr/bunnyrr1.png" align="middle" width="400px" />
 						<figcaption>max_ray_depth = 1 (CBbunny.dae)</figcaption>
 					</td>
-				</tr>
-				<tr align="center">
 					<td>
-						<img src="images/your_file.png" align="middle" width="400px" />
+						<img src="media/part4/rr/bunnyrr2.png" align="middle" width="400px" />
 						<figcaption>max_ray_depth = 2 (CBbunny.dae)</figcaption>
 					</td>
-					<td>
-						<img src="images/your_file.png" align="middle" width="400px" />
-						<figcaption>max_ray_depth = 3 (CBbunny.dae)</figcaption>
-					</td>
 				</tr>
 				<tr align="center">
+					
 					<td>
-						<img src="images/your_file.png" align="middle" width="400px" />
+						<img src="media/part4/rr/bunnyrr3.png" align="middle" width="400px" />
+						<figcaption>max_ray_depth = 3 (CBbunny.dae)</figcaption>
+					</td>
+					<td>
+						<img src="media/part4/rr/bunnyrr4.png" align="middle" width="400px" />
+						<figcaption>max_ray_depth = 4 (CBbunny.dae)</figcaption>
+					</td>
+					<td>
+						<img src="media/part4/rr/bunnyrr100.png" align="middle" width="400px" />
 						<figcaption>max_ray_depth = 100 (CBbunny.dae)</figcaption>
 					</td>
 				</tr>
+				
 			</table>
 		</div>
-		<br>
-		<p>
-			YOUR EXPLANATION GOES HERE
-		</p>
 		<br>
 
 		<h3>
@@ -559,45 +559,45 @@ You will probably want to use the instructional machines for the above renders i
 			<table style="width:100%">
 				<tr align="center">
 					<td>
-						<img src="images/your_file.png" align="middle" width="400px" />
-						<figcaption>1 sample per pixel (example1.dae)</figcaption>
+						<img src="media/part4/sample/sphere1s.png" align="middle" width="400px" />
+						<figcaption>1 sample per pixel (CBspheres_lambertian.dae)</figcaption>
 					</td>
 					<td>
-						<img src="images/your_file.png" align="middle" width="400px" />
-						<figcaption>2 samples per pixel (example1.dae)</figcaption>
-					</td>
-				</tr>
-				<tr align="center">
-					<td>
-						<img src="images/your_file.png" align="middle" width="400px" />
-						<figcaption>4 samples per pixel (example1.dae)</figcaption>
-					</td>
-					<td>
-						<img src="images/your_file.png" align="middle" width="400px" />
-						<figcaption>8 samples per pixel (example1.dae)</figcaption>
+						<img src="media/part4/sample/sphere2s.png" align="middle" width="400px" />
+						<figcaption>2 samples per pixel (CBspheres_lambertian.dae)</figcaption>
 					</td>
 				</tr>
 				<tr align="center">
 					<td>
-						<img src="images/your_file.png" align="middle" width="400px" />
-						<figcaption>16 samples per pixel (example1.dae)</figcaption>
+						<img src="media/part4/sample/sphere4s.png" align="middle" width="400px" />
+						<figcaption>4 samples per pixel (CBspheres_lambertian.dae)</figcaption>
 					</td>
 					<td>
-						<img src="images/your_file.png" align="middle" width="400px" />
-						<figcaption>64 samples per pixel (example1.dae)</figcaption>
+						<img src="media/part4/sample/sphere8s.png" align="middle" width="400px" />
+						<figcaption>8 samples per pixel (CBspheres_lambertian.dae)</figcaption>
 					</td>
 				</tr>
 				<tr align="center">
 					<td>
-						<img src="images/your_file.png" align="middle" width="400px" />
-						<figcaption>1024 samples per pixel (example1.dae)</figcaption>
+						<img src="media/part4/sample/sphere16s.png" align="middle" width="400px" />
+						<figcaption>16 samples per pixel (CBspheres_lambertian.dae)</figcaption>
+					</td>
+					<td>
+						<img src="media/part4/sample/sphere64s.png" align="middle" width="400px" />
+						<figcaption>64 samples per pixel (CBspheres_lambertian.dae)</figcaption>
+					</td>
+				</tr>
+				<tr align="center">
+					<td>
+						<img src="media/part4/sample/sphere1024s.png" align="middle" width="400px" />
+						<figcaption>1024 samples per pixel (CBspheres_lambertian.dae)</figcaption>
 					</td>
 				</tr>
 			</table>
 		</div>
 		<br>
 		<p>
-			YOUR EXPLANATION GOES HERE
+			As the number of samples increases, the rendered image becomes less and less noisy. This is because as more samples are used, there is a higher percentage of the scene being considered when calculating the resultant radiance for each pixel, which results in a values closer to the expected value. A low sampling rate means there is a higher chance that light paths chosen due to sampling don't accurately represent how the light actually interacts with the scene, which manifests in the noise seen in the rendered results.
 		</p>
 		<br>
 
