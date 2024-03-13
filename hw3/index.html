@@ -55,27 +55,9 @@
 
 		<br><br>
 
-
-		<!-- <div align="center">
-  <table style="width:100%">
-      <tr>
-          <td align="middle">
-          <img src="images/example_image.png" width="480px" />
-          <figcaption align="middle">Results Caption: my bunny is the bounciest bunny</figcaption>
-      </tr>
-  </table>
-</div>
-
-
-<p>Here is an example of how to include a simple formula:</p>
-<p align="middle"><pre align="middle">a^2 + b^2 = c^2</pre></p>
-<p>or, alternatively, you can include an SVG image of a LaTex formula.</p>
-
-<div> -->
-
 		<h2 align="middle">Overview</h2>
 		<p>
-			YOUR RESPONSE GOES HERE
+			In this project, we learn to render scenes by first generating rays and the algorithms to detect primitive intersection. We then optimise this process by using bounding volume hierachy, which significantly increases the efficiency of calculating ray-primitive intersections by eliminating unecessary intersections to consider. Thereafter, the scene is rendered using direct lighting and indirect lighting, which uses previously learnt concepts like monte carlo estimator, and new concepts like using importance sampling and considering a material's brdf. Lastly, we implement adaptive sampling to dynamically optimise sampling rates at different parts of the scenes to increase rendering efficiency.
 		</p>
 		<br>
 
@@ -610,7 +592,10 @@ Pick one scene and render it with at least 2048 samples per pixel. Show a good s
 			Explain adaptive sampling. Walk through your implementation of the adaptive sampling.
 		</h3>
 		<p>
-			YOUR RESPONSE GOES HERE
+			Adaptive sampling is a technique used to reduce unecessarily high sampling rates for certain parts of the scene, by considering how much the pixel has converges. This is because uniform sampling results in all pixels being sampled at the same rate regardless of how complicated or simple that part of the scene is, which results in unnecessary calculations. 
+		</p>
+		<p>
+			To implement adaptive sampling, I first initialised two double variables, s1 and s1. As I iterated through ns_aa samples, the illuminance of the calculated for each sample is added to this sum. Then, for every samplesPerBatch samples, I calcualate the current mean and variance of the samples, and then use the given algorithm to calculate I. If I <= maxTolerance * mean, I then break out of the for loop and stop the sampling iteration. This means that the pixel has converged enough and does not require additionall sampling to get rid of noise in the scene. 
 		</p>
 		<br>
 
@@ -625,22 +610,22 @@ Pick one scene and render it with at least 2048 samples per pixel. Show a good s
 			<table style="width:100%">
 				<tr align="center">
 					<td>
-						<img src="images/your_file.png" align="middle" width="400px" />
-						<figcaption>Rendered image (example1.dae)</figcaption>
+						<img src="media/part5/bench_Adaptive.png" align="middle" width="400px" />
+						<figcaption>Rendered image (bench.dae)</figcaption>
 					</td>
 					<td>
-						<img src="images/your_file.png" align="middle" width="400px" />
-						<figcaption>Sample rate image (example1.dae)</figcaption>
+						<img src="media/part5/bench_Adaptive_rate.png" align="middle" width="400px" />
+						<figcaption>Sample rate image (bench.dae)</figcaption>
 					</td>
 				</tr>
 				<tr align="center">
 					<td>
-						<img src="images/your_file.png" align="middle" width="400px" />
-						<figcaption>Rendered image (example2.dae)</figcaption>
+						<img src="media/part5/spheres_Adaptive.png" align="middle" width="400px" />
+						<figcaption>Rendered image (CBspheres_lambertian.dae)</figcaption>
 					</td>
 					<td>
-						<img src="images/your_file.png" align="middle" width="400px" />
-						<figcaption>Sample rate image (example2.dae)</figcaption>
+						<img src="media/part5/spheres_Adaptive_rate.png" align="middle" width="400px" />
+						<figcaption>Sample rate image (CBspheres_lambertian.dae)</figcaption>
 					</td>
 				</tr>
 			</table>
