@@ -368,7 +368,7 @@
     </b></blockquote>
 
     <p>
-      TODO
+      Shader program is a program that runs on the gpu that is designed to directly handle rendering effects. Vertex shaders are primarily focused on translating vertices in the model coordinates to their screen coordinates. Edits to meshes for displacement shading are handled here. The rasterizer then interpolates the vertices' attributes (like position and normals) to produce fragments, which are passed to the fragment shaders. In the fragment shaders, lighting calculations are handled and each pixel (or fragment) is assigned a vec4 output (rgba), which gives the colour and texture of each pixel in the resultant render. 
     </p>
 
 
@@ -378,29 +378,29 @@
     </b></blockquote>
 
     <p>
-      TODO
+      The Blinn-Phong shading model builds on the diffusion shading model by not only calculating diffused light, but also specular light and ambient light to create a more realistic render. The specular light is calculated by measuring the "nearness" of the half vector and the surface normal by using dot product. 
     </p>
 
     <div align="middle">
       <table style="width:100%">
         <tr align="center">
           <td>
-              <img src="images/t5-blinn-phong-ambient.png" align="middle" width="400px" />
+              <img src="media/part5/ambient.png" align="middle" width="400px" />
               <figcaption>Ambient component only</figcaption>
               
           </td>
           <td>
-              <img src="images/t5-blinn-phong-diffuse.png" align="middle" width="400px" />
+              <img src="media/part5/diffuse.png" align="middle" width="400px" />
               <figcaption>Diffuse component only</figcaption>
           </td>
         </tr>
         <tr align="center">
           <td>
-              <img src="images/t5-blinn-phong-specular.png" align="middle" width="400px" />
+              <img src="media/part5/specular.png" align="middle" width="400px" />
               <figcaption>Specular component only</figcaption>
           </td>
           <td>
-              <img src="images/t5-blinn-phong-all.png" align="middle" width="400px" />
+              <img src="media/part5/blinn-phong.png" align="middle" width="400px" />
               <figcaption>Complete Blinn-Phong model</figcaption>
           </td>
         </tr>
@@ -413,7 +413,7 @@
     </b></blockquote>
 
     <div align="middle">
-      <img src="images/t5-custom-texture.png" align="middle" width="100%" />
+      <img src="media/part5/custom_texture.png" align="middle" width="100%" />
     </div>
 
 
@@ -431,22 +431,22 @@
       <table style="width:100%">
         <tr align="center">
           <td>
-            <img src="images/t5-bump-mapping-cloth.png" align="middle" width="400vw" />
+            <img src="media/part5/128bumpcloth.png" align="middle" width="400vw" />
             <figcaption>Bump Mapping on the Cloth</figcaption>
           </td>
           <td>
-            <img src="images/t5-bump-mapping-sphere.png" align="middle" width="400vw" />
+            <img src="media/part5/128bumpball.png" align="middle" width="400vw" />
             <figcaption>Bump Mapping on the Sphere</figcaption>
           </td>
           <td>
         </tr>
         <tr align="center">
           <td>
-            <img src="images/t5-displacement-mapping-sphere.png" align="middle" width="400vw" />
+            <img src="media/part5/128displacementball.png" align="middle" width="400vw" />
             <figcaption>Displacement Mapping on the Sphere</figcaption>
           </td>
           <td>
-            <img src="images/t5-displacement-mapping-sphere-2.png" align="middle" width="400vw" />
+            <img src="media/part5/16displacementball.png" align="middle" width="400vw" />
             <figcaption>Displacement Mapping on the Sphere (coarser mesh)</figcaption>
           </td>
           <td>
@@ -455,7 +455,7 @@
     </div>
 
     <p>
-      TODO
+      Comparing the resulting render from bump shading and displacement shading on the sphere, we can tell clearly that the mesh of the sphere itself changes in displacement shading, but not in bump shading. This is because bump shading relies on scaling the surface normal based on the height of the texture and thus manipulating the resultant pixel values, but displacement shading goes one step further and changes the mesh based on the height of the texture as well. When the resolution increases and the mesh coarseness decreases, we can also tell that the visible bumps on the sphere due to displacement mapping decreases in significance, and is more subtle since the mesh is now more "accurate" in a sense.
     </p>
 
 
@@ -467,52 +467,17 @@
       <table style="width:100%">
         <tr align="center">
           <td>
-            <img src="images/t5-mirror-shader-cloth.png" align="middle" width="400vw" />
+            <img src="media/part5/mirrorcloth.png" align="middle" width="400vw" />
             <figcaption>Mirror Shader on the Cloth</figcaption>
           </td>
           <td>
-            <img src="images/t5-mirror-shader-sphere.png" align="middle" width="400vw" />
+            <img src="media/part5/mirrorball.png" align="middle" width="400vw" />
             <figcaption>Mirror Shader on the Sphere</figcaption>
           </td>
           <td>
         </tr>
       </table>
     </div>
-
-
-    <blockquote><b>
-    Explain what you did in your custom shader, if you made one.
-    </b></blockquote>
-
-    <p>
-      TODO
-    </p>
-
-
-
-  <h2 align="middle">Mesh Competition Extra Credit (optional)</h2>
-  <blockquote><b>
-    The final (optional) part for the mesh competition is where you have the opportunity to be creative and individual, 
-    so be sure to provide a good description of what you were going for, what you did, and how you did it.
-  </b></blockquote>
-
-  <p>
-    N/A
-  </p>
-
-
-
-  <h2 align="middle">Extra Credit (optional)</h2>
-    <blockquote><b>
-    If you implemented any additional technical features for the cloth simulation, 
-    clearly describe what you did and provide screenshots that illustrate your work. 
-    If it is an improvement compared to something already existing on the cloth simulation, 
-    compare and contrast them both in words and in images.
-    </b></blockquote>
-
-    <p>
-      N/A
-    </p>
 
 </body>
 </html>
